@@ -14,7 +14,6 @@ export default class Def extends Component {
               {this.props.location.pathname}
               </span> was not found</h3>
           </div>
-
         </div>
       </div>
     );
