@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../logo.svg';
 import styled from 'styled-components';
 import { ButtonContainer } from './Button';
+import { MenuItemContainer } from './MenuItem';
 
 export default class Navbar extends Component {
   render() {
@@ -14,21 +15,21 @@ export default class Navbar extends Component {
         </Link>
 
         <ul className="navbar-nav align-items-center">
-          <li className="nav-item ml-5">
+          <MenuItemContainer className="nav-item ml-5">
             <Link to="/" className="nav-link">
-              Products
+              Store
             </Link>
-          </li>
-          <li className="nav-item ml-5">
-            <Link to="/" className="nav-link">
-              Deposit
+          </MenuItemContainer>
+          <MenuItemContainer className="nav-item ml-5">
+            <Link to="/wallet" className="nav-link">
+              Wallet
             </Link>
-          </li>
-          <li className="nav-item ml-5">
+          </MenuItemContainer>
+          {/* <li className="nav-item ml-5">
             <Link to="/" className="nav-link">
               Withdraw
             </Link>
-          </li>
+          </li> */}
         </ul>
         <Link to='/cart' className="ml-auto">
           <ButtonContainer>

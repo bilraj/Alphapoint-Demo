@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { storeProducts, detailProduct } from './data';
+import { storeProducts, detailProduct } from './trialdata.js';
 
 const ProductContext = React.createContext();
 // Provider - Provides info for our application
@@ -20,8 +20,25 @@ class ProductProvider extends Component {
 
     componentDidMount() {
         this.setProducts();
-        // this.hydrateWithLocalStorage();
+        console.log("CART");
+        console.log(this.state.cart);
+        // this.setState(()=> {
+        //     return {
+        //         cart: JSON.parse(localStorage.getItem('cart'))
+        //     }
+        // })
+        console.log("AFTER")
+        console.log(this.state.cart);
 
+        this.hydrateWithLocalStorage();
+    }
+
+    componentWillUnmount() {
+        console.log("UNMOUNTING")
+        // localStorage.setItem("cart", JSON.stringify(this.state.cart));
+        // localStorage.setItem("cartSubtotal", JSON.stringify(this.state.cartSubtotal));
+        // localStorage.setItem("cartTax", JSON.stringify(this.state.cartTax));
+        // localStorage.setItem("cartTotal", JSON.stringify(this.state.cartTotal));
     }
 
     setProducts = () => {
@@ -61,10 +78,12 @@ class ProductProvider extends Component {
 
         this.setState(() => {
             return { products: tempProducts, cart: [...this.state.cart, product] };
-        }, () => { this.addTotals() });
-
-        // Save to localStorage
-        // localStorage.setItem("cart", JSON.stringify(this.state.cart));
+        }, () => {
+            this.addTotals();
+            console.log("STATE OF CART")
+            console.log(this.state.cart);
+            localStorage.setItem('cart', JSON.stringify(this.state.cart))
+        });
     };
 
     openModal = (id) => {
@@ -108,7 +127,6 @@ class ProductProvider extends Component {
 
         product.count -= 1;
         if (product.count === 0) {
-            console.log("REMOVEING")
             this.removeItem(id);
         } else {
             product.total = product.count * product.price;
@@ -141,6 +159,7 @@ class ProductProvider extends Component {
             return { cart: [...tempCart], products: tempProducts };
         }, () => {
             this.addTotals();
+            localStorage.setItem('cart', JSON.stringify(this.state.cart))
         });
     }
 
@@ -152,6 +171,7 @@ class ProductProvider extends Component {
         }, () => {
             this.setProducts();
             this.addTotals();
+            localStorage.setItem('cart', JSON.stringify(this.state.cart))
         })
     }
 
@@ -162,14 +182,17 @@ class ProductProvider extends Component {
         });
         const tempTax = subTotal * 0.1;
         const tax = parseFloat(tempTax.toFixed(2));
-        const total = subTotal + tax;
-        console.log(`Total: ${total}`)
+        const total = parseFloat((subTotal + tax).toFixed(2));
         this.setState(() => {
             return {
                 cartSubtotal: subTotal,
                 cartTax: tax,
                 cartTotal: total
             };
+        }, () => {
+            localStorage.setItem('cartSubTotal', JSON.stringify(this.state.cartSubtotal));
+            localStorage.setItem('cartTax', JSON.stringify(this.state.cartTax));
+            localStorage.setItem('cartTotal', JSON.stringify(this.state.cartTotal));
         });
     }
 
@@ -179,12 +202,16 @@ class ProductProvider extends Component {
         for (let key in this.state) {
             if (localStorage.hasOwnProperty(key)) {
                 var value = localStorage.getItem(key);
+                console.log("Key: " + key)
 
                 try {
                     value = JSON.parse(value);
-                    this.setState(() => { return { [key]: value } });
+                    this.setState(() => { return { key: value } });
+
+                    console.log(`ADDING TO ${key}: ` + value)
                 } catch {
-                    this.setState(() => { return { [key]: value } });
+                    alert("CAUGHT")
+                    this.setState(() => { return { key: value } });
                 }
             }
         }
