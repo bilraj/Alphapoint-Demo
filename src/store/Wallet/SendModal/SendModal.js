@@ -44,7 +44,7 @@ export default class SendModal extends Component {
         return (
             <WalletConsumer>
                 {(value) => {
-                    const { modalOpen, toggleModal, updateBalance, balance, symbol } = value;
+                    const { modalOpen, toggleModal, updateBalance, balance } = value;
 
                     // 0 is sendModal
                     if (!modalOpen) {
@@ -139,18 +139,22 @@ export default class SendModal extends Component {
 
                                             <SendConsumer>
                                                 {(val) => {
-                                                    const { currency, amount, convertedValue, toAddress, description } = val;
+                                                    const { currency, amount, convertedValue, toAddress, description, sufficientBalance } = val;
+                                                    const flow = "red";
+                                                    const type = "send";
                                                     var obj = {
-                                                        currency: currency, amount: amount, convertedValue: convertedValue, toAddress: toAddress, description: description
+                                                        currency: currency, amount: amount, convertedValue: convertedValue, toAddress: toAddress, description: description, flow: flow, type: type 
                                                     };
 
                                                     return (
                                                         <div className="send-button">
                                                             <ButtonContainer style={{ height: "40px" }}
                                                                 onClick={() => {
-                                                                    value.addTransaction(obj);
-                                                                    updateBalance(convertedValue, false, currency);
-                                                                    toggleModal();
+                                                                    if (sufficientBalance) {
+                                                                        value.addTransaction(obj);
+                                                                        updateBalance(convertedValue, false, currency);
+                                                                        toggleModal();
+                                                                    }
                                                                 }}
                                                             >Send </ButtonContainer>
                                                         </div>

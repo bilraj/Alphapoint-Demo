@@ -15,7 +15,7 @@ import Dashboard from './store/Wallet/Dashboard/Dashboard';
 import BuySell from './store/Wallet/BuySell';
 import Menu from './store/Wallet/Menu';
 import SendModal from './store/Wallet/SendModal/SendModal';
-import Transactions from './store/Wallet/Transactions';
+import Transactions from './store/Wallet/Transactions/Transactions'
 
 const hide = ({props}) => {
   const { location } = props;

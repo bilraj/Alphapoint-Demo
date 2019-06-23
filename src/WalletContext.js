@@ -8,7 +8,7 @@ export default class WalletProvider extends Component {
         balance: [100, 'BTC'],
         totalBalance: 0,
         modalOpen: false,
-        transcations: {},
+        transactions: [],
     }
 
     componentDidMount() {
@@ -32,31 +32,22 @@ export default class WalletProvider extends Component {
             })
         }
 
-        // if (localStorage.getItem('balance') !== null) {
-        //     let value = JSON.parse(localStorage.getItem('balance'));
-        //     this.setState(() => {
-        //         return { 'balance': value }
-        //     }, () => console.log("Balkkkkkkkkkkkkkkkkk: " + this.state.balance)
-        //     )
-        // }
-        // if (localStorage.getItem('modalOpen') !== null) {
-        //     let value = JSON.parse(localStorage.getItem('modalOpen'));
-        //     this.setState(() => {
-        //         return { 'modalOpen': value }
-        //     })
-        // }
 
-
+        if (localStorage.getItem("transactions") !== null) {
+            this.setState(() => {
+                return {
+                    transactions: JSON.parse(localStorage.getItem("transactions"))
+                }
+            })
+        }
     }
 
     updateBalance = (amount, change, symbol) => {
-        console.log("DSJNADJSABJKDSBA: " + this.state.balance)
         var newBalance = this.state.balance[0];
 
         if (change === true) {
             newBalance += amount;
         } else { newBalance -= amount; }
-        console.log("NIGGA BALANCE IS: " + newBalance)
 
         this.setState(() => {
             return {
@@ -67,13 +58,25 @@ export default class WalletProvider extends Component {
 
             localStorage.setItem('balance', JSON.stringify(this.state.balance));
             localStorage.setItem('totalBalance', JSON.stringify(this.state.totalBalance));
-            console.log("BALANCE ISssssssssssssss : " + this.state.balance)
         })
+    }
+
+    getTime = () => {
+        const d = new Date();
+        const month = d.getMonth();
+        const day = d.getDate();
+        const year = d.getFullYear();
+        const hour = d.getHours();
+        const minutes = d.getMinutes();
+        const seconds = d.getSeconds();
+        const date = `${month.toString()}/${day.toString()}/${year.toString()} ${hour}:${minutes}:${seconds}`;
+
+        return date;
     }
 
     addTransaction = (transaction) => {
         // Get amount, convertedValue, currency, toAddress
-        const { amount, convertedValue, currency, toAddress, description } = transaction;
+        const { amount, convertedValue, currency, toAddress, description, flow, type } = transaction;
         console.log(`Amount: ${amount}, ConvertedVal: ${convertedValue}, currency: ${currency}, toAddress: ${toAddress}, description: ${description}`)
 
         /* transaction {
@@ -88,9 +91,31 @@ export default class WalletProvider extends Component {
             ] " 
         } */
 
+        const date = this.getTime();
 
+        var id = new Date().valueOf();;
 
+        const newTransaction = {
+            id: id,
+            date: date,
+            amount: amount,
+            convertedVal: convertedValue,
+            currency: currency,
+            toAddress: toAddress,
+            description: description,
+            type: type,
+            flow: flow
+        }
 
+        var temp = this.state.transactions.concat(newTransaction);
+        this.setState((prevState) => {
+            return {
+                transactions: [...temp]
+            }
+        }, () => {
+            console.log("TRANSACTIONS: " + JSON.stringify(this.state.transcations, null, 4));
+            localStorage.setItem('transactions', JSON.stringify(this.state.transactions));
+        })
     }
 
     toggleModal = () => {

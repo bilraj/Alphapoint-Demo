@@ -11,6 +11,7 @@ export default class Dashboard extends Component {
     return (
       <WalletConsumer>
         {(value) => {
+          console.log("Walets valueL " + value.balance[0])
           return (
             <div className="cont">
               <div style={{ height: "100%" }} className="d-flex flex-direction-column">

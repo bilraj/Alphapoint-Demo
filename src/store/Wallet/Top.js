@@ -10,7 +10,6 @@ export default class Top extends Component {
                     const { toggleModal, balance } = value;
                     
                     const bal = parseFloat((balance[0]*1).toFixed(2));
-                    console.log("BALCN: " + bal)
                     return (
                         <React.Fragment>
                             <div className="d-flex" style={{ height:"fit-content", width:"100%", marginBottom:"20px"}}>

@@ -8,7 +8,7 @@ export default class Menu extends Component {
 
         return (
 
-            <MenuWrapper className="navbar-nav flex-column" style={{border:"1px solid black"}}>
+            <MenuWrapper className="navbar-nav flex-column" >
                 <Link to="/wallet/dashboard" className="nav-item">
                     <ButtonContainer selected className="px-3 py-2">
                         <span className="mr-2"><i className="fas fa-home"></i></span>
