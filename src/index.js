@@ -8,10 +8,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { ProductProvider } from './Context';
+import WalletProvider from './WalletContext';
+import { SendProvider } from './store/Wallet/SendModal/SendContext';
 
 ReactDOM.render(
     <ProductProvider>
-        <Router><App /></Router>
+        <WalletProvider>
+            <SendProvider>
+                <Router><App /></Router>
+
+            </SendProvider>
+
+        </WalletProvider>
     </ProductProvider>
     , document.getElementById('root')
 );

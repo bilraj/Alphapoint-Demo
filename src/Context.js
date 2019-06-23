@@ -13,32 +13,56 @@ class ProductProvider extends Component {
         cart: [],
         modalOpen: false,
         modalProduct: detailProduct,
-        cartSubtotal: 0,
+        cartSubTotal: 0,
         cartTax: 0,
-        cartTotal: 0
+        cartTotal: 0,
     }
 
     componentDidMount() {
         this.setProducts();
-        console.log("CART");
-        console.log(this.state.cart);
-        // this.setState(()=> {
-        //     return {
-        //         cart: JSON.parse(localStorage.getItem('cart'))
-        //     }
-        // })
-        console.log("AFTER")
-        console.log(this.state.cart);
-
-        this.hydrateWithLocalStorage();
+        this.setValuesFromLocalStorage();
+    }
+    
+    isIterable(obj) {
+        // checks for null and undefined
+        if (obj == null) {
+          return false;
+        }
+        return typeof obj[Symbol.iterator] === 'function';
     }
 
+    setValuesFromLocalStorage() {
+        if(localStorage.getItem('cart') !== null) {
+            let value = JSON.parse(localStorage.getItem('cart'));
+            this.setState(() => {
+                return {'cart': value}
+            })
+        }
+        if(localStorage.getItem('cartSubTotal') !== null) {
+            this.setState(() => {
+                return {'cartSubTotal': JSON.parse(localStorage.getItem('cartSubTotal'))}
+            })
+            this.printObject(this.state);
+        }
+        if(localStorage.getItem('cartTotal') !== null) {
+            this.setState(() => {
+                return {'cartTotal': JSON.parse(localStorage.getItem('cartTotal'))}
+            })
+        }
+        if(localStorage.getItem('cartTax') !== null) {
+            this.setState(() => {
+                return {'cartTax': JSON.parse(localStorage.getItem('cartTax'))}
+            })
+        }
+        if(localStorage.getItem('products') !== null) {
+            this.setState(() => {
+                return {'products': JSON.parse(localStorage.getItem('products'))}
+            })
+        }
+    }
     componentWillUnmount() {
         console.log("UNMOUNTING")
-        // localStorage.setItem("cart", JSON.stringify(this.state.cart));
-        // localStorage.setItem("cartSubtotal", JSON.stringify(this.state.cartSubtotal));
-        // localStorage.setItem("cartTax", JSON.stringify(this.state.cartTax));
-        // localStorage.setItem("cartTotal", JSON.stringify(this.state.cartTotal));
+
     }
 
     setProducts = () => {
@@ -50,8 +74,11 @@ class ProductProvider extends Component {
 
         this.setState(() => {
             return { products: tempProducts }
+        }, () => {
+            localStorage.setItem('products', JSON.stringify(this.state.products));
         })
     }
+
 
     getItem = (id) => {
         const product = this.state.products.find(item => item.id === id);
@@ -66,6 +93,9 @@ class ProductProvider extends Component {
         });
     }
 
+    printObject(object) {
+    }
+
     addToCart = (id) => {
         let tempProducts = [...this.state.products];
         const index = tempProducts.indexOf(this.getItem(id));
@@ -76,13 +106,14 @@ class ProductProvider extends Component {
         const price = product.price;
         product.total = price;
 
+
         this.setState(() => {
             return { products: tempProducts, cart: [...this.state.cart, product] };
         }, () => {
             this.addTotals();
-            console.log("STATE OF CART")
-            console.log(this.state.cart);
             localStorage.setItem('cart', JSON.stringify(this.state.cart))
+            localStorage.setItem('products', JSON.stringify(this.state.products))
+
         });
     };
 
@@ -106,7 +137,7 @@ class ProductProvider extends Component {
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
         product.count += 1;
-        product.total = product.count * product.price;
+        product.total = parseFloat((product.count * product.price).toFixed(2));
 
         this.setState(() => {
             return {
@@ -114,6 +145,7 @@ class ProductProvider extends Component {
             };
         }, () => {
             this.addTotals();
+            localStorage.setItem('cart', JSON.stringify(this.state.cart));
         });
 
     }
@@ -129,13 +161,14 @@ class ProductProvider extends Component {
         if (product.count === 0) {
             this.removeItem(id);
         } else {
-            product.total = product.count * product.price;
+            product.total = parseFloat((product.count * product.price).toFixed(2));
             this.setState(() => {
                 return {
                     cart: [...tempCart]
                 }
             }, () => {
                 this.addTotals();
+                localStorage.setItem('cart', JSON.stringify(this.state.cart));
             })
         }
     }
@@ -176,42 +209,45 @@ class ProductProvider extends Component {
     }
 
     addTotals = () => {
-        let subTotal = 0;
+        var subTotal = 0;
         this.state.cart.map(item => {
             subTotal += item.total;
         });
+        subTotal = parseFloat(subTotal.toFixed(2));
+
         const tempTax = subTotal * 0.1;
         const tax = parseFloat(tempTax.toFixed(2));
         const total = parseFloat((subTotal + tax).toFixed(2));
         this.setState(() => {
             return {
-                cartSubtotal: subTotal,
+                cartSubTotal: subTotal,
                 cartTax: tax,
                 cartTotal: total
             };
         }, () => {
-            localStorage.setItem('cartSubTotal', JSON.stringify(this.state.cartSubtotal));
+            localStorage.setItem('cartSubTotal', JSON.stringify(this.state.cartSubTotal));
             localStorage.setItem('cartTax', JSON.stringify(this.state.cartTax));
             localStorage.setItem('cartTotal', JSON.stringify(this.state.cartTotal));
         });
     }
 
     hydrateWithLocalStorage() {
-        console.log("HYDRATING")
         // For all keys
         for (let key in this.state) {
-            if (localStorage.hasOwnProperty(key)) {
+            if (localStorage.getItem(key) !== null) {
                 var value = localStorage.getItem(key);
                 console.log("Key: " + key)
 
                 try {
                     value = JSON.parse(value);
-                    this.setState(() => { return { key: value } });
+                    if(this.isIterable(value)) {
+                        this.setState(() => { return { [key]: value } });
+                    }
 
                     console.log(`ADDING TO ${key}: ` + value)
                 } catch {
                     alert("CAUGHT")
-                    this.setState(() => { return { key: value } });
+                    this.setState(() => { return { [key]: value } });
                 }
             }
         }

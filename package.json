@@ -10,6 +10,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-shopping-cart": "^1.8.31",
+    "react-table": "^6.10.0",
     "styled-components": "^4.3.1"
   },
   "scripts": {

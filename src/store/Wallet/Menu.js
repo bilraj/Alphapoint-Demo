@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 export default class Menu extends Component {
 
     render() {
+
         return (
-            <MenuWrapper className="navbar-nav flex-column">
+
+            <MenuWrapper className="navbar-nav flex-column" style={{border:"1px solid black"}}>
                 <Link to="/wallet/dashboard" className="nav-item">
                     <ButtonContainer selected className="px-3 py-2">
                         <span className="mr-2"><i className="fas fa-home"></i></span>
@@ -14,11 +16,25 @@ export default class Menu extends Component {
                     </ButtonContainer>
                 </Link>
                 <Link to="/wallet/buy-sell" className="nav-item">
-                    <ButtonContainer selected className="px-3 py-2">
+                    <ButtonContainer selected className="px-3 py-2" >
                         <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
                         Buy & Sell
                     </ButtonContainer>
                 </Link>
+                <Link to="/wallet/transactions" className="nav-item">
+                    <ButtonContainer selected className="px-3 py-2">
+                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
+                        Transactions
+                    </ButtonContainer>
+                </Link>
+                <Link to="/wallet/transactions" className="nav-item">
+                    <ButtonContainer selected className="px-3 py-2">
+                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
+                        Transactions
+                    </ButtonContainer>
+                </Link>
+
+
             </MenuWrapper>
         )
     }
@@ -41,6 +57,7 @@ text-align:left;
 font-size: 1.4 rem;
 background: transparent;
 border: none;
+border-radius: 0.3rem;
 color: var(--mainGrey);
 padding: 0.2rem 0.5rem;
 cursor: pointer;

@@ -21,7 +21,7 @@ export default class Navbar extends Component {
             </Link>
           </MenuItemContainer>
           <MenuItemContainer className="nav-item ml-5">
-            <Link to="/wallet" className="nav-link">
+            <Link to="/wallet/dashboard" className="nav-link">
               Wallet
             </Link>
           </MenuItemContainer>

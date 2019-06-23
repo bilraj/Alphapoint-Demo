@@ -1,0 +1,264 @@
+.to-from {}
+
+#modal {}
+
+.modal-container {
+    height: 75vh;
+    width: 65vh;
+}
+
+.container {
+    padding: 0px !important;
+}
+
+.modal-header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-body {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#send-bitcoin {
+    font-size: 20px;
+    margin-left: 20px;
+    color: rgb(13, 53, 120);
+    font-weight: 400;
+
+    /* border: 1px solid black; */
+}
+
+.currency-from {
+    /* marginRight: "1vw", marginLeft: "1vw", width: "40%", height: "auto", position: "relative"  */
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+#currency {
+    width: 40%;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#from {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#to {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#equals {
+    margin-right: 7px;
+    margin-left: 7px;
+}
+
+textarea {
+    font-size: 16px !important;
+    height: 120px;
+}
+
+.row-thing {
+    margin-left: 0px;
+    font-size: 15px;
+}
+/* From Box */
+.from-box {
+    width: 100%;
+    font-size: 20px;
+    margin: 0;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--modalBoxGrey);
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    font-size: 16px;
+}
+
+#wallet-box {
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+#down-icon {
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+}
+
+.usd-btc {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+
+.fa-chevron-down:hover {
+    color: purple;
+}
+
+.fa-bitcoin {
+    color: orange;
+}
+
+.fa-ethereum {
+    color: purple;
+}
+
+.items {
+    width: 100%;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    margin-top: 0.4rem;
+    border: 1px solid var(--modalBoxGrey);
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+
+.item {
+    font-size: 20px;
+    padding-bottom: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.item:hover {
+    color: var(--lightBlue)
+}
+
+/* To box */
+#to {
+    position: relative;
+    z-index: 1;
+}
+
+.to-box {
+    /* width: 100%;
+    height: 10px;
+    border-radius: 4px;
+    font-size: 20px;
+    margin: 0;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--modalBoxGrey);
+    cursor: pointer; */
+
+    width: 100%;
+    border-radius: 4px;
+
+    font-size: 20px;
+    margin: 0;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--lightGrey);
+    cursor: pointer;
+    border-color: var(--modalBoxGrey);
+
+}
+
+
+.usd-btc-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.amount-box {
+    font-size: 20px;
+    width: 80%;
+    margin: 0;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--modalBoxGrey);
+    cursor: pointer;
+}
+
+.send-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.desc-box {
+    font-size: 20px;
+    width: 100%;
+    margin: 0;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid var(--modalBoxGrey);
+}
+
+
+::-webkit-input-placeholder {
+    /* WebKit browsers */
+    opacity: .3 !important;
+}
+
+
+input[type="text"]#subdomaintwo {
+    -webkit-appearance: none !important;
+    color: black;
+    width: 15%;
+    text-align: right;
+    border: 1px solid gray;
+    border-left: 0px;
+    margin: 0 0 0 -7px;
+    background: white;
+    border-radius: 4px;
+    border: none;
+    border-color: var(--modalBoxGrey);
+    font-size: 15px;
+}
+
+input[type="text"]#subdomain {
+    -webkit-appearance: none !important;
+    border: none;
+    outline: none;
+}
+
+::-webkit-input-placeholder {
+    font-size: 15px;
+}
