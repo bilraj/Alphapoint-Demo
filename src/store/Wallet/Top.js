@@ -8,6 +8,9 @@ export default class Top extends Component {
             <WalletConsumer>
                 {(value) => {
                     const { toggleModal, balance } = value;
+                    
+                    const bal = parseFloat((balance[0]*1).toFixed(2));
+                    console.log("BALCN: " + bal)
                     return (
                         <React.Fragment>
                             <div className="d-flex" style={{ height:"fit-content", width:"100%", marginBottom:"20px"}}>
@@ -15,7 +18,8 @@ export default class Top extends Component {
                                     <ButtonContainer onClick={() => toggleModal()}>Send</ButtonContainer>
                                     <ButtonContainer>Request</ButtonContainer>
 
-                                    <span style={{ color: 'var(--lightBlue)', position:"absolute", right:"0" }}><h3>Balance: {balance}</h3></span>
+                                    <span style={{ color: 'var(--lightBlue)', position:"absolute", right:"0" }}>
+                                        <h3>Balance: {bal}{balance[1]}</h3></span>
                                 </div>
 
                             </div>

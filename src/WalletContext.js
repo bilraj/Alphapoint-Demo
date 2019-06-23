@@ -14,11 +14,20 @@ export default class WalletProvider extends Component {
     componentDidMount() {
 
         // Set totalBalance
-        if(localStorage.getItem("balance") !== null) {
-            const balance = JSON.parse(localStorage.getItem("balance"))[0];
+        if (localStorage.getItem("balance") !== null) {
+            const balance = JSON.parse(localStorage.getItem("balance"));
             this.setState(() => {
                 return {
-                    totalBalance: balance
+                    totalBalance: balance[0],
+                    balance: balance
+                }
+            }, () => {
+                console.log("JUST ADDED BALANCE: " + localStorage.getItem("balance"))
+            })
+        } else {
+            this.setState(() => {
+                return {
+                    totalBalance: this.state.balance[0]
                 }
             })
         }
@@ -51,12 +60,13 @@ export default class WalletProvider extends Component {
 
         this.setState(() => {
             return {
-                balance: [newBalance, symbol], 
+                balance: [newBalance, symbol],
                 totalBalance: newBalance
             }
         }, () => {
 
             localStorage.setItem('balance', JSON.stringify(this.state.balance));
+            localStorage.setItem('totalBalance', JSON.stringify(this.state.totalBalance));
             console.log("BALANCE ISssssssssssssss : " + this.state.balance)
         })
     }
