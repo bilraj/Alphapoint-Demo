@@ -24,7 +24,9 @@ export default class Menu extends Component {
                 </Link>
                 <Link to="/wallet/transactions" className="nav-item">
                     <ButtonContainer selected className="px-3 py-2">
-                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
+                        <span className="mr-2"><i class="fas fa-money-check-alt"></i>
+
+                        </span>
                         Transactions
                     </ButtonContainer>
                 </Link>
@@ -34,7 +36,9 @@ export default class Menu extends Component {
                             value.isAdmin ?
                                 <Link to="/wallet/tokenize" className="nav-item">
                                     <ButtonContainer selected className="px-3 py-2">
-                                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
+                                        <span className="mr-2"><i className="fas fa-plus-square"></i>
+
+                                        </span>
                                         Tokenize
                     </ButtonContainer>
                                 </Link> : <div></div>
@@ -51,7 +55,10 @@ export default class Menu extends Component {
 
 const MenuWrapper = styled.ul`
     font-size: 1.1rem;
-    width: 15%;
+    width: 250px;
+    max-width:250px;
+    min-width:250px;
+    height: 100%;
     color: var(--menuTextBlue);
     font-weight: 500;
     display:flex;

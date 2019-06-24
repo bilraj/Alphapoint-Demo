@@ -46,17 +46,16 @@
 #top-balance {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
-.cont {
-    height: 100vh;
-}
 
 /* Table  */
 .table-container-1 {
     display: flex;
     flex-direction: column;
     width: 50% !important;
+    height: auto;
     border: 1px solid var(--lightBlue);
     border-radius: 6px;
     box-shadow: 4px 10px var(--lightBlue);

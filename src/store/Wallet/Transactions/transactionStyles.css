@@ -65,12 +65,14 @@
 .table-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80vw;
     border: 1px solid var(--lightBlue);
     border-radius: 6px;
-    
 }
 
+.cont {
+    width: 100vw;
+}
 .transaction-table-row-container {
     width: 100%;
     display: flex;
@@ -79,9 +81,7 @@
 
 }
 
-#transaction-table-row-description{
-    
-}
+
 
 .transaction-table-words {
     width: 100%;

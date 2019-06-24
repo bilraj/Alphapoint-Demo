@@ -15,14 +15,12 @@ export default class Dashboard extends Component {
           console.log("Walets valueL " + value.balance[0])
           return (
             <div className="cont">
-              <div style={{ height: "100%" }} className="d-flex flex-direction-column">
                 <Menu />
                 <div className="container-fluid" id="top-balance" >
                   <Top />
-                  <Table value={value} style={{ backgroundColor: "green", width: "100px", height: "100px" }} />
+                  <Table value={value}  />
 
                 </div>
-              </div>
 
             </div>
           )
