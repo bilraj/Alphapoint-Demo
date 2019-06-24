@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SendConsumer } from './SendContext';
 import { WalletConsumer } from '../../../WalletContext';
+import { TokenConsumer } from '../../../TokenContext';
 
 export default class AmountBox extends Component {
 
@@ -29,10 +30,10 @@ export default class AmountBox extends Component {
         )
     }
 
-    validateBalance(amount, balance, setSufficientBalance) {
+    validateBalance(amount, balance, setSufficientBalance, symbol) {
         var convertedBalance = 0;
         // Save amount in USD
-        switch (balance[1]) {
+        switch (symbol) {
             case "BTC":
                 convertedBalance = amount * 0.00010;
                 break;
@@ -40,12 +41,12 @@ export default class AmountBox extends Component {
                 convertedBalance = amount * 0.0035;
                 break;
             default:
-                alert("Neither btc and eth")
+                convertedBalance = amount;
                 break;
         }
 
-        console.log("We have: " + balance + " and converted is : " + convertedBalance)
-        if (balance[0] < convertedBalance) {
+        // alert("We have: " + balance + " and converted is : " + convertedBalance)
+        if (balance < convertedBalance) {
             this.setState(() => {
                 return {
                     sufficientBalance: false
@@ -53,7 +54,7 @@ export default class AmountBox extends Component {
             }, () => {
                 setSufficientBalance(false)
             })
-        } 
+        }
         else {
             this.setState(() => {
                 return {
@@ -77,17 +78,33 @@ export default class AmountBox extends Component {
                     return (
                         <WalletConsumer>
                             {(walletValue) => {
-                                const { balance } = walletValue;
-                                console.log("BALANCE HERE IS: " + balance)
+                                const { balances } = walletValue;
+                                const balance = balances[0].balance;
                                 return (
-                                    <div className="amount-box" style={{borderColor: this.state.sufficientBalance ? "" : "red"}}>
-                                        <input id="subdomain" type="text" 
-                                            onInput={this.handleChange}    
-                                            onChange={(e) => value.convertValue(Number(e.target.value))}
-                                            onBlur={() => this.validateBalance(Number(this.state.value), balance, value.setSufficientBalance)}
-                                            value={this.state.value} placeholder={this.state.placeholder} />
-                                        <input type="text" id="subdomaintwo" value="USD" disabled />
-                                    </div>
+                                    <TokenConsumer>
+                                        {val => {
+                                            const { haveToken } = val;
+                                            const { balance: bal } = val;
+                                            return (
+                                                haveToken ? (<div className="amount-box" style={{ borderColor: this.state.sufficientBalance ? "" : "red" }}>
+                                                    <input id="subdomain" type="text"
+                                                        onInput={this.handleChange}
+                                                        onChange={(e) => value.convertValue(Number(e.target.value))}
+                                                        onBlur={() => this.validateBalance(Number(this.state.value), bal, value.setSufficientBalance, "")}
+                                                        value={this.state.value} placeholder={this.state.placeholder} />
+                                                    <input type="text" id="subdomaintwo" value="USD" disabled />
+                                                </div>) : <div className="amount-box" style={{ borderColor: this.state.sufficientBalance ? "" : "red" }}>
+                                                        <input id="subdomain" type="text"
+                                                            onInput={this.handleChange}
+                                                            onChange={(e) => value.convertValue(Number(e.target.value))}
+                                                            onBlur={() => this.validateBalance(Number(this.state.value), balance, value.setSufficientBalance, "BTC")}
+                                                            value={this.state.value} placeholder={this.state.placeholder} />
+                                                        <input type="text" id="subdomaintwo" value="USD" disabled />
+                                                    </div>
+                                            )
+                                        }}
+                                    </TokenConsumer>
+
                                 )
 
                             }}

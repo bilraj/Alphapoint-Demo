@@ -4,7 +4,7 @@ const SendContext = React.createContext();
 
 class SendProvider extends Component {
     state = {
-        currency: 'BTC',
+        currency: '',
         amount: 0,
         convertedValue: 0,
         sufficientBalance: true,
@@ -24,6 +24,11 @@ class SendProvider extends Component {
             else if (sym == "ETH") {
                 var newVal = amount * .0035;
                 this.setState({ convertedValue: newVal, amount: amount })
+            } 
+            else {
+                var newVal = amount;
+                this.setState({ convertedValue: newVal, amount: amount })
+
             }
         }
     }

@@ -11,20 +11,24 @@ import { ProductProvider } from './Context';
 import WalletProvider from './WalletContext';
 import { SendProvider } from './store/Wallet/SendModal/SendContext';
 import LoginProvider from './LoginContext';
+import TokenProvider from './TokenContext';
 
 ReactDOM.render(
-    <LoginProvider>
+    <TokenProvider>
 
-        <ProductProvider>
-            <WalletProvider>
-                <SendProvider>
-                    <Router><App /></Router>
+        <LoginProvider>
+            <ProductProvider>
+                <WalletProvider>
+                    <SendProvider>
+                        <Router><App /></Router>
 
-                </SendProvider>
+                    </SendProvider>
 
-            </WalletProvider>
-        </ProductProvider>
-    </LoginProvider>
+                </WalletProvider>
+            </ProductProvider>
+        </LoginProvider>
+    </TokenProvider>
+
 
     , document.getElementById('root')
 );

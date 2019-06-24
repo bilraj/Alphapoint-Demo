@@ -5,8 +5,7 @@ const WalletContext = React.createContext();
 export default class WalletProvider extends Component {
 
     state = {
-        balance: [100, 'BTC'],
-        totalBalance: 0,
+        balances: [{ name: "BTC", balance: 100 }],
         modalOpen: false,
         transactions: [],
     }
@@ -14,24 +13,14 @@ export default class WalletProvider extends Component {
     componentDidMount() {
 
         // Set totalBalance
-        if (localStorage.getItem("balance") !== null) {
-            const balance = JSON.parse(localStorage.getItem("balance"));
+        if (localStorage.getItem("balances") !== null) {
+            const temp = JSON.parse(localStorage.getItem("balances"));
             this.setState(() => {
                 return {
-                    totalBalance: balance[0],
-                    balance: balance
-                }
-            }, () => {
-                console.log("JUST ADDED BALANCE: " + localStorage.getItem("balance"))
-            })
-        } else {
-            this.setState(() => {
-                return {
-                    totalBalance: this.state.balance[0]
+                    balances: temp
                 }
             })
         }
-
 
         if (localStorage.getItem("transactions") !== null) {
             this.setState(() => {
@@ -43,21 +32,28 @@ export default class WalletProvider extends Component {
     }
 
     updateBalance = (amount, change, symbol) => {
-        var newBalance = this.state.balance[0];
+        var temp = this.state.balances;
+        var index = 0;
+
+        for (var i = 0; i < temp.length; i++) {
+            if (temp[i].name === symbol) {
+                index = i;
+                break;
+            }
+        }
 
         if (change === true) {
-            newBalance += amount;
-        } else { newBalance -= amount; }
+            temp[i].balance += amount;
+        } else { temp[i].balance -= amount; }
+
 
         this.setState(() => {
             return {
-                balance: [newBalance, symbol],
-                totalBalance: newBalance
+                balances: { ...temp },
             }
         }, () => {
 
-            localStorage.setItem('balance', JSON.stringify(this.state.balance));
-            localStorage.setItem('totalBalance', JSON.stringify(this.state.totalBalance));
+            localStorage.setItem('balances', JSON.stringify(this.state.balances));
         })
     }
 

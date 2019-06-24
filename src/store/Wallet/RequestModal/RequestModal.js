@@ -37,8 +37,7 @@ export default class SendModal extends Component {
         return (
             <WalletConsumer>
                 {(value) => {
-                    const { modalOpen, toggleModal, updateBalance, balance, symbol } = value;
-
+                    const { modalOpen, toggleModal, updateBalance, balances, symbol } = value;
                     // 0 is sendModal
                     if (!modalOpen) {
                         return null;
@@ -89,7 +88,7 @@ export default class SendModal extends Component {
                                                             { value: 'My Bitcoin Wallet', id: 1, sym: 'BTC', symbol: 'fa-bitcoin' },
                                                             { value: 'My Ethereum Wallet', id: 2, sym: 'ETH', symbol: 'fa-ethereum' }
                                                         ]}
-                                                        balance={balance}
+                                                        balances={balances}
                                                     />
                                                 </div>
                                             </div>

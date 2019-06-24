@@ -121,3 +121,35 @@
 #bitcoin {
     font-size: 16px;
 }
+
+.buy-container {
+    width: 20% !important;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+    height: auto;
+    border: 1px solid var(--lightBlue);
+    border-radius: 6px;
+    box-shadow: 4px 10px var(--lightBlue);
+    width: 30px;
+    height: 70%;
+    border-radius: 4px;
+}
+
+.buy-words {
+    font-size: 18px;
+    margin-left: 20px;
+    color: rgb(80, 89, 87);
+}
+
+.buy-input {
+    border-radius: 5px;
+    height: 30px;
+    width: 80%;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.buy-row {
+    margin-top:30px;
+}

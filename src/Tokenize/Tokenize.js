@@ -6,6 +6,7 @@ import TokenSelection from './TokenSelection';
 import Contract from './Contract';
 import Verify from './Verify';
 import { Link } from 'react-router-dom';
+import { TokenConsumer } from '../TokenContext';
 
 
 export default class Tokenize extends Component {
@@ -261,6 +262,8 @@ export default class Tokenize extends Component {
 
 
                     </form>
+
+                  
 
                     {/* <span id="welcome-text">Asset Tokenization</span> */}
                 </div>

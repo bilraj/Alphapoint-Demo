@@ -1,13 +1,11 @@
 import React from 'react';
 
 const TokenContext = React.createContext();
-export default class TokenProvider extends Component {
+export default class TokenProvider extends React.Component {
 
     state = {
-        assetType: '',
-        specificAssetType: '',
-        tokenContract: "one",
         token: {
+            id: 1021,
             name: "",
             symbol: "",
             decimals: 0,
@@ -15,10 +13,23 @@ export default class TokenProvider extends Component {
             companyName: "",
             issuanceType: "",
             country: ""
-        }
+        },
+        balance: 0,
+        haveToken: false,
     }
 
-    
+    componentDidMount() {
+        if (localStorage.getItem("token")) {
+            const temp = JSON.parse(localStorage.getItem("token"))
+            this.setState(() => {
+                return {
+                    token: { ...temp },
+                    haveToken: true
+                }
+            }, () => {
+            })
+        }
+    }
 
     render() {
         return (
@@ -30,3 +41,8 @@ export default class TokenProvider extends Component {
         );
     }
 }
+
+
+const TokenConsumer = TokenContext.Consumer;
+
+export { TokenProvider, TokenConsumer };

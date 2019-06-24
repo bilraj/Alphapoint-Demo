@@ -10,9 +10,10 @@ export default class FromBox extends Component {
     }
 
     render() {
+        // alert("JSJAJL " + JSON.stringify(this.props))
 
-        const { balance } = this.props;
-        const adjusted = parseFloat((balance[0] * 1).toFixed(2));
+        const { balances } = this.props;
+        const adjusted = parseFloat((balances[0].balance * 1).toFixed(2));
 
 
         return (

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SendConsumer } from './SendContext';
+import { TokenConsumer } from '../../../TokenContext';
 
 export default class ReadOnlyAmountBox extends Component {
 
@@ -35,15 +36,25 @@ export default class ReadOnlyAmountBox extends Component {
         return (
             <SendConsumer>
                 {(value) => {
-                    const { currency, convertedValue, sufficientBalance } = value;
+                    const { convertedValue, sufficientBalance } = value;
                     return (
-                        <div  className="amount-box" style={{borderColor: sufficientBalance ? "" : "red"}}>
-                            <input id="subdomain" type="text" onChange={this.handleChange} value={convertedValue} placeholder={this.state.placeholder}
-                                value={convertedValue}
-                                readOnly />
-                            <input type="text" id="subdomaintwo" value={currency} disabled />
-                        </div>
+                        <TokenConsumer>
+                            {(val) => {
+                                const { haveToken } = val;
+                                var currency = haveToken ? val.token.symbol : "BTC";
+                                return (
+                                    <div className="amount-box" style={{ borderColor: sufficientBalance ? "" : "red" }}>
+                                        <input id="subdomain" type="text" onChange={this.handleChange} value={convertedValue} placeholder={this.state.placeholder}
+                                            value={convertedValue}
+                                            readOnly />
+                                        <input type="text" id="subdomaintwo" value={currency} disabled />
+                                    </div>
+                                )
+                            }}
+                        </TokenConsumer>
                     )
+
+
                 }}
             </SendConsumer>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "./styles.css";
 import { WalletConsumer } from '../../../WalletContext';
+import { TokenConsumer } from '../../../TokenContext';
 
 
 export default class Table extends Component {
@@ -13,6 +14,7 @@ export default class Table extends Component {
         ],
 
         value: "",
+        haveToken: false
     }
 
     componentDidMount = () => {
@@ -25,13 +27,21 @@ export default class Table extends Component {
             })
         }
         else {
-            const { balance } = this.props.value;
+            const { balances } = this.props.value;
             var newCurrencies = this.state.currencies.filter(item => item.id !== 0);
-            const newBtc = { id: 0, name: "BTC", balance: balance[0], conversionRate: 10558, logo: "fab fa-bitcoin" };
+            const newBtc = { id: 0, name: "BTC", balance: balances[0].balance, conversionRate: 10558, logo: "fab fa-bitcoin" };
 
             this.setState(() => {
                 return {
                     currencies: [...newCurrencies, newBtc]
+                }
+            })
+        }
+
+        if (localStorage.getItem("haveToken") !== null) {
+            this.setState(() => {
+                return {
+                    currencies: JSON.parse(localStorage.getItem("haveToken"))
                 }
             })
         }
@@ -68,10 +78,14 @@ export default class Table extends Component {
         return (
             <WalletConsumer>
                 {(value) => {
-                    const { balance } = value;
-                    console.log("TOTAL BALANCE: " + balance)
-                    const usd = parseFloat((balance[0] * 10601).toFixed(2)).toLocaleString(navigator.language, { minimumFractionDigits: 0 });
-                    const adjusted = parseFloat((balance[0] * 1).toFixed(2));
+                    const { balances } = value;
+                    const balance = balances[0].balance;
+                    if(balances.length > 1) {
+                        balance += balances[1].balance;
+                    }
+
+                    const usd = parseFloat((balance * 10601).toFixed(2)).toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+                    const adjusted = parseFloat((balance * 1).toFixed(2));
                     return (
                         <div className="table-container-1">
                             <div className="table-header">
@@ -83,25 +97,57 @@ export default class Table extends Component {
                                 </div>
                             </div>
 
-                            <div>
-                                {
-                                    this.state.currencies.map((item) => {
-                                        return (
-                                            <div key={item.id} className="usd-pax">
-                                                <div className="left-header">
-                                                    <span style={{marginRight:"8px"}}><i className={item.logo}></i></span>
-                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
-                                                </div>
-                                                <div className="right-header">
-                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
-                                                    <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
-                                                </div>
-                                            </div>
+                            <TokenConsumer>
+                                {(val) => {
+                                    const { haveToken, balance } = val;
+                                    const { name, symbol, id } = val.token;
 
-                                        )
-                                    })
-                                }
-                            </div>
+                                    var item = {
+                                        id: id,
+                                        name: name,
+                                        balance: balance,
+                                        symbol: symbol
+                                    }
+
+                                    return (
+                                        <div>
+                                            <div>
+                                                {
+                                                    this.state.currencies.map((item) => {
+                                                        return (
+                                                            <div key={item.id} className="usd-pax">
+                                                                <div className="left-header">
+                                                                    <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
+                                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
+                                                                </div>
+                                                                <div className="right-header">
+                                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
+                                                                    <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
+                                                                </div>
+                                                            </div>
+
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                            {
+                                                haveToken ? (<div key={item.id} className="usd-pax">
+                                                    <div className="left-header">
+                                                        <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
+                                                        <span id="usd-pax" className="balance-table-words">{item.name}</span>
+                                                    </div>
+                                                    <div className="right-header">
+                                                        <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
+                                                        <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.symbol}</span>
+                                                    </div>
+                                                </div>) : {}
+                                            }
+                                        </div>
+                                    )
+                                }}
+                            </TokenConsumer>
+
+
                             {/* Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />
                             <button onClick={this.handleClick}>Add</button> */}
                         </div>
