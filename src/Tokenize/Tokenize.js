@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Menu from '../store/Wallet/Menu';
 import AssetSetup from './AssetSetup';
 import './tokenStyles.css';
+import TokenSelection from './TokenSelection';
 
 export default class Tokenize extends Component {
 
@@ -9,9 +10,10 @@ export default class Tokenize extends Component {
         super(props);
 
         this.state = {
-            currentStep: 1,
+            currentStep: 2,
             assetType: 'physical',
-            specificAssetType: 'land'
+            specificAssetType: 'land',
+            tokenContract: ''
         }
     }
 
@@ -37,24 +39,83 @@ export default class Tokenize extends Component {
 
     handleSubmit = (event) => {
         const { assetType, specificAssetType } = this.state;
-        console.log(`Asset type: ${assetType} and Specific asset ${specificAssetType}`)
+        console.log(`Asset type: ${assetType} and Specific asset ${specificAssetType}`);
+
+    }
+
+    _next = () => {
+        let currentStep = this.state.currentStep;
+        currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+        this.setState(() => {
+            return {
+                currentStep: currentStep
+            }
+        })
+    }
+
+    _prev = () => {
+        let currentStep = this.state.currentStep;
+        currentStep = currentStep <= 1 ? 1 : currentStep - 1;
+        this.setState(() => {
+            return {
+                currentStep: currentStep
+            }
+        })
+    }
+
+    get previousButton() {
+        let currentStep = this.state.currentStep;
+
+        // If the current step is not 1, then render the "previous" button
+        if (currentStep !== 1) {
+            return (
+                <div className="button2" onClick={this._prev}>
+                    <span>Back</span>
+                </div>
+            )
+        }
+
+        return null;
+    }
+
+    get nextButton() {
+        let currentStep = this.state.currentStep;
+        if (currentStep < 3) {
+            return (
+                <div className="button1" onClick={this._next}>
+                    <span>Continue</span>
+                </div>
+            )
+        }
+
+        return null;
     }
 
     render() {
         return (
-            <div className="cont">
-                <div style={{ height: "100%" }} className="d-flex flex-direction-row">
+            <div className="container-fluid">
+                <div style={{ height: "100%", width:"100%"}} className="d-flex flex-direction-column ">
                     <Menu />
-                    <form>
-                        <div className="container-fluid tokenization-container" style={{ height: "100vh", width: "100vw"}}>
-                            <div style={{width:"100%", marginTop:"20px", marginLeft:"20px", color:"rgb(35, 37, 40)"}}><span style={{ fontSize: "26px", color: "rgb(35, 37, 40)", fontWeight: "400" }}>Step 1</span></div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="container-fluid" style={{width:"1100px", textAlign:"center"}}>
+                            <div style={{ marginTop: "50px", marginLeft: "20px", fontWeight: "bold", color: "red" }}>
+                                <span style={{ fontSize: "26px", fontWeight: "400" }}>Step {this.state.currentStep}:</span>
+                            </div>
 
-                            <AssetSetup 
-                                    currentStep={this.state.currentStep} 
-                                    assetType={this.state.assetType} 
-                                    handleAssetChange={this.handleAssetChange.bind(this)}
-                                    handleSpecificAssetChange={this.handleSpecificAssetChange.bind(this)} />
+                            <AssetSetup
+                                currentStep={this.state.currentStep}
+                                assetType={this.state.assetType}
+                                handleAssetChange={this.handleAssetChange.bind(this)}
+                                handleSpecificAssetChange={this.handleSpecificAssetChange.bind(this)} />
+
+                            <TokenSelection
+                                specificAssetType={this.state.specificAssetType}
+                                currentStep={this.state.currentStep}
+
+                            />
                         </div>
+                        <span id="prev">{this.previousButton}</span>
+                        <span id="next">{this.nextButton}</span>
 
                     </form>
 
