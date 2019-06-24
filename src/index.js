@@ -10,17 +10,22 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ProductProvider } from './Context';
 import WalletProvider from './WalletContext';
 import { SendProvider } from './store/Wallet/SendModal/SendContext';
+import LoginProvider from './LoginContext';
 
 ReactDOM.render(
-    <ProductProvider>
-        <WalletProvider>
-            <SendProvider>
-                <Router><App /></Router>
+    <LoginProvider>
 
-            </SendProvider>
+        <ProductProvider>
+            <WalletProvider>
+                <SendProvider>
+                    <Router><App /></Router>
 
-        </WalletProvider>
-    </ProductProvider>
+                </SendProvider>
+
+            </WalletProvider>
+        </ProductProvider>
+    </LoginProvider>
+
     , document.getElementById('root')
 );
 
