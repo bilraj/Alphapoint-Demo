@@ -138,8 +138,8 @@ textarea {
     cursor: pointer;
     border-radius: 4px;
     background-color: #ffffff;
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    z-index: 10000000;
 }
 
 .item {

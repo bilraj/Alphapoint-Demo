@@ -6,7 +6,9 @@ const LoginContext = React.createContext();
 export default class LoginProvider extends Component {
     state = {
         loggedIn: false,
-        users: []
+        users: [],
+        isAdmin: false,
+        triedToLogin: false
     }
 
     componentDidMount() {
@@ -26,7 +28,6 @@ export default class LoginProvider extends Component {
                 const singleUser = { ...user };
                 tempUser = [...tempUser, singleUser];
             });
-            console.log("TEMO : " + JSON.stringify(tempUser))
 
             this.setState(() => {
                 return {
@@ -42,16 +43,30 @@ export default class LoginProvider extends Component {
                 }
             })
         }
+        if(localStorage.getItem("isAdmin") !== null) {
+            this.setState(() => {
+                return {
+                    isAdmin: JSON.parse(localStorage.getItem("isAdmin"))
+                }
+            })
+        }
     }
 
     checkValidCredentials = (obj) => {
         const { username: un, password: pw } = obj;
-        console.log(JSON.stringify("USERL: " + this.state.users))
         var found = false
         this.state.users.forEach(user => {
-            const { username, password } = user;
+            const { username, password, isAdmin } = user;
             if (un === username && pw === password) {
                 found = true;
+
+                if(isAdmin) {
+                    this.setState(() => {
+                        return {
+                            isAdmin: true
+                        }
+                    }, localStorage.setItem("isAdmin", JSON.stringify(true)))
+                }
             }
         })
 
@@ -66,7 +81,6 @@ export default class LoginProvider extends Component {
             })
         } else {
             this.setState(() => {
-                console.log("FALLLSSSSEE")
                 return {
                     loggedIn: false
                 }
@@ -75,25 +89,44 @@ export default class LoginProvider extends Component {
             })
         }
 
+        this.setState(() => {
+            return {
+                triedToLogin: true
+            }
+        })
 
     }
 
     setLoggedIn = (loggedIn) => {
         this.setState(value => {
             return {
-                loggedIn: loggedIn
+                loggedIn: loggedIn,
+                triedToLogin: false,
             }
         }, () => {
             localStorage.setItem("loggedIn", JSON.stringify(this.state.loggedIn));
         })
     }
 
+    logout = () => {
+        this.setState(value => {
+            return {
+                loggedIn: false,
+                triedToLogin: false,
+                isAdmin: false
+            }
+        }, () => {
+            localStorage.setItem("loggedIn", JSON.stringify(false));
+            localStorage.setItem("isAdmin", JSON.stringify(false));
+        })
+    }
     render() {
         return (
             <LoginContext.Provider value={{
                 ...this.state,
                 setLoggedIn: this.setLoggedIn,
-                checkValidCredentials: this.checkValidCredentials
+                checkValidCredentials: this.checkValidCredentials,
+                logout: this.logout
             }}>
                 {this.props.children}
             </LoginContext.Provider>

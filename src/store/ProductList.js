@@ -3,6 +3,7 @@ import Product from './Product';
 import Title from './Title';
 import { ProductConsumer } from '../Context';
 import { ButtonContainer } from './Button';
+import styled from 'styled-components';
 
 export default class ProductList extends Component {
 
@@ -29,9 +30,17 @@ export default class ProductList extends Component {
 
     return (
       <React.Fragment>
-        <h3>Filter:</h3>
-        <input value={this.state.value} style={{ borderRadius: "10px" }} type="text" onChange={this.handleValue} />
-        <ButtonContainer className="ml-3">Submit</ButtonContainer>
+        <Divcontainer>
+          <h3 className="text-blue" style={{
+            fontFamily: "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif", fontSize: "20px"
+          }}> Search:</h3>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <input value={this.state.value} style={{ borderRadius: "4px" }} type="text" onChange={this.handleValue} />
+          </div>
+
+
+        </Divcontainer>
+
 
         <div className="py-5">
           <div className="container">
@@ -51,8 +60,16 @@ export default class ProductList extends Component {
             </div>
           </div>
         </div>
-      </React.Fragment> //2:18
+      </React.Fragment > //2:18
       // <div><Product/>  </div>
     );
   }
 }
+
+const Divcontainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    width: 10%;
+    margin-left: 30px;
+    margin-top: 50px;
+`

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import "./styles.css";
+import React from 'react';
+import "./transactionStyles.css";
 
 export default function TransactionTable({ value }) {
     // alert(JSON.stringify(value, null, 4));
@@ -34,7 +34,7 @@ export default function TransactionTable({ value }) {
                             <div className="transaction-table-row-container" key={transaction.id}>
                                 <span className="transaction-table-words"> {transaction.id}</span>
                                 <span className="transaction-table-words"
-                                    style={{ fontWeight:"800", color: transaction.flow === "red" ? "red" : "green" }}> {transaction.amount}</span>
+                                    style={{ fontWeight:"800", color: transaction.flow === "red" ? "red" : "green" }}> ${transaction.amount}</span>
                                 <span className="transaction-table-words"> {transaction.toAddress}</span>
                                 <span className="transaction-table-words" id="transaction-table-row-description"> {transaction.description}</span>
                                 <span className="transaction-table-words"> {transaction.date}</span>

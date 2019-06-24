@@ -193,6 +193,8 @@ class ProductProvider extends Component {
         }, () => {
             this.addTotals();
             localStorage.setItem('cart', JSON.stringify(this.state.cart))
+            localStorage.setItem('products', JSON.stringify(this.state.products))
+
         });
     }
 

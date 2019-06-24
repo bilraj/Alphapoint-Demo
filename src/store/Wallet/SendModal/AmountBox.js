@@ -82,8 +82,8 @@ export default class AmountBox extends Component {
                                 return (
                                     <div className="amount-box" style={{borderColor: this.state.sufficientBalance ? "" : "red"}}>
                                         <input id="subdomain" type="text" 
-                                            onInput={this.handleChange}   
-                                            onChange={() => value.convertValue(Number(this.state.value), this.state.amount)}
+                                            onInput={this.handleChange}    
+                                            onChange={(e) => value.convertValue(Number(e.target.value))}
                                             onBlur={() => this.validateBalance(Number(this.state.value), balance, value.setSufficientBalance)}
                                             value={this.state.value} placeholder={this.state.placeholder} />
                                         <input type="text" id="subdomaintwo" value="USD" disabled />

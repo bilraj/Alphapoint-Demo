@@ -25,7 +25,6 @@ export default class LoginFields extends Component {
     }
 
     handleClick(value) {
-        console.log("VALUE: " + JSON.stringify(value))
         const obj = {
             username: this.state.username,
             password: this.state.password
@@ -40,7 +39,10 @@ export default class LoginFields extends Component {
         return (
             <LoginConsumer>
                 {(value) => {
+                    var invalid = value.triedToLogin && !value.loggedIn;
+                    var display = invalid ? "Invalid Credentials" : ""
                     return (
+
                         <div className="login-container">
                             <div id="logo">
                                 <Logo />
@@ -51,12 +53,17 @@ export default class LoginFields extends Component {
                                     <span id="un">Username:</span> <br /> <span ><input type="text" onChange={this.handleChange} name="username" className="login-input" placeholder="Username" /></span>
                                 </div>
                                 <div className="password">
-                                    <span id="pw">Password:</span> <br /><span><input className="login-input" onChange={this.handleChange} name="password" type="text" placeholder="Password" /></span>
+                                    <span id="pw">Password:</span> <br /><span><input className="login-input" onChange={this.handleChange} name="password" type="password" placeholder="Password" /></span>
                                 </div>
                             </div>
 
                             <div className="login-button-container">
-                                <span><ButtonContainer onClick={() => this.handleClick(value)} id="login-button">Login</ButtonContainer></span>
+                                <form onSubmit={() => this.handleClick(value)}>
+                                    <span><ButtonContainer id="login-button">Login</ButtonContainer></span>
+                                </form>
+                            </div>
+                            <div className="invalid-credentials-container">
+                                <span id="invalid-credentials">{display}</span>
                             </div>
                         </div>
                     )

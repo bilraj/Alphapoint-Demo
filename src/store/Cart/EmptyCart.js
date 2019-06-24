@@ -10,9 +10,9 @@ export default function EmptyCart() {
                     <h1>Your cart is empty</h1>
                 </div>
             </div>
-            <div className="row">
+            <div className="d-flex justify-content-center row mt-5">
                 <Link to="/">
-                    <ButtonContainer className="text-center">Go to Store</ButtonContainer>
+                    <ButtonContainer style={{height:"100px", width:"200px"}} className="text-center">Go to Store</ButtonContainer>
                 </Link>
             </div>
         </div>

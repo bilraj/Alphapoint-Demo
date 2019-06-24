@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { LoginConsumer } from '../../LoginContext';
 
 export default class Menu extends Component {
 
@@ -27,12 +28,20 @@ export default class Menu extends Component {
                         Transactions
                     </ButtonContainer>
                 </Link>
-                <Link to="/wallet/transactions" className="nav-item">
-                    <ButtonContainer selected className="px-3 py-2">
-                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
-                        Transactions
+                <LoginConsumer>
+                    {(value) => {
+                        return (
+                            value.isAdmin ?
+                                <Link to="/wallet/tokenize" className="nav-item">
+                                    <ButtonContainer selected className="px-3 py-2">
+                                        <span className="mr-2"><i className="fas fa-shopping-cart"></i></span>
+                                        Tokenize
                     </ButtonContainer>
-                </Link>
+                                </Link> : <div></div>
+
+                        )
+                    }}
+                </LoginConsumer>
 
 
             </MenuWrapper>

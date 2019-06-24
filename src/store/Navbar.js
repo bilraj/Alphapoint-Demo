@@ -4,8 +4,13 @@ import logo from '../logo.svg';
 import styled from 'styled-components';
 import { ButtonContainer } from './Button';
 import { MenuItemContainer } from './MenuItem';
+import { LoginConsumer } from '../LoginContext';
 
 export default class Navbar extends Component {
+  handleClick = (value) => {
+    value.logout();
+  }
+  
   render() {
     return (
       <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm">
@@ -37,6 +42,20 @@ export default class Navbar extends Component {
             My cart
           </ButtonContainer>
         </Link>
+        <LoginConsumer>
+          {(value) => {
+            return (
+              <Link to='/' className="">
+                <ButtonContainer onClick={() => this.handleClick(value)}>
+                  <span className="mr-2"><i className="fas fa-sign-out-alt"></i>
+                  </span>
+                  Logout
+          </ButtonContainer>
+              </Link>
+            )
+          }}
+        </LoginConsumer>
+
       </NavWrapper>
     );
   }

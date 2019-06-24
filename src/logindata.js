@@ -8,7 +8,8 @@ export const users = [
         wallet: {
             balance: [100, "BTC"],
             transactions: []
-        }
+        },
+        isAdmin: true
     },
     {
         username: "zach",
@@ -19,7 +20,8 @@ export const users = [
         wallet: {
             balance: [100, "BTC"],
             transactions: []
-        }
+        },
+        isAdmin: false
     },
     {
         username: "risho",
@@ -30,6 +32,9 @@ export const users = [
         wallet: {
             balance: [100, "BTC"],
             transactions: []
-        }
+        },
+        isAdmin: false
     },
+
+
 ]

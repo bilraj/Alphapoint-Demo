@@ -4,6 +4,7 @@ import Top from '../Top';
 import Table from './Table';
 import 'react-table/react-table.css';
 import { WalletConsumer } from '../../../WalletContext';
+import './styles.css';
 
 
 export default class Dashboard extends Component {

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import "./styles.css";
 import { WalletConsumer } from '../../../WalletContext';
 
+
 export default class Table extends Component {
     state = {
         currencies: [
             { id: 0, name: "BTC", balance: 0, conversionRate: 0, logo: "fab fa-bitcoin" },
-            { id: 1, name: "USDPAX", balance: 0, conversionRate: 0, logo: "fab fa-igloo" },
-            { id: 2, name: "Ethereum", balance: 0, conversionRate: 0, logo: "fas fa-ethereum" },
+            { id: 1, name: "Monero", balance: 0, conversionRate: 0, logo: "fab fa-monero" },
+            { id: 2, name: "Ethereum", balance: 0, conversionRate: 0, logo: "fab fa-ethereum" },
             { id: 3, name: "Ripple", balance: 0, conversionRate: 0, logo: "fas fa-box" }
         ],
 
@@ -75,25 +76,24 @@ export default class Table extends Component {
                         <div className="table-container-1">
                             <div className="table-header">
                                 <div className="left-header">
-                                    <span className="table-words">Total Balance</span>
+                                    <span className="balance-table-words">Total Balance</span>
                                 </div>
                                 <div className="right-header">
-                                    <span className="table-words" id="total-balance-number">${usd}</span>
+                                    <span className="balance-table-words" id="total-balance-number">${usd}</span>
                                 </div>
                             </div>
 
                             <div>
                                 {
                                     this.state.currencies.map((item) => {
-                                        console.log(item.logo);
                                         return (
                                             <div key={item.id} className="usd-pax">
                                                 <div className="left-header">
-                                                    <span><i className={item.logo}></i></span>
-                                                    <span id="usd-pax" className="table-words">{item.name}</span>
+                                                    <span style={{marginRight:"8px"}}><i className={item.logo}></i></span>
+                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
                                                 </div>
                                                 <div className="right-header">
-                                                    <span className="table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
+                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
                                                     <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
                                                 </div>
                                             </div>
@@ -102,8 +102,8 @@ export default class Table extends Component {
                                     })
                                 }
                             </div>
-                            Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />
-                            <button onClick={this.handleClick}>Add</button>
+                            {/* Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />
+                            <button onClick={this.handleClick}>Add</button> */}
                         </div>
                     )
                 }}

@@ -12,12 +12,11 @@ class SendProvider extends Component {
         description: ''
     }
 
-    convertValue = (amount, symbol) => {
+    convertValue = (amount) => {
 
         if (typeof (amount) == "number") {
             const sym = this.state.currency;
             console.log("Converting: " + amount + " to " + this.state.currency)
-            if (amount < 10) { this.setState({ convertedValue: 0 }); }
             if (sym == "BTC") {
                 var newVal = parseFloat((amount * .00010).toFixed(6));
                 this.setState({ convertedValue: newVal, amount: amount })

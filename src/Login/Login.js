@@ -15,6 +15,7 @@ import BuySell from '../store/Wallet/BuySell';
 import SendModal from '../store/Wallet/SendModal/SendModal';
 import Transactions from '../store/Wallet/Transactions/Transactions';
 import { Switch, Route } from 'react-router-dom';
+import Tokenize from '../Tokenize/Tokenize';
 
 
 
@@ -35,13 +36,14 @@ export default class Login extends Component {
                                 <Route exact path="/wallet/dashboard" component={Dashboard} />
                                 <Route exact path="/wallet/buy-sell" component={BuySell} />
                                 <Route exact path="/wallet/transactions" component={Transactions} />
+                                <Route exact path="/wallet/tokenize" component={Tokenize} />
                                 <Route component={Def} />
                             </Switch>
                             <Modal />
                             <SendModal />
                         </div> : <div className="login-page-container">
                                 <LoginFields />
-                                < LoginImage />
+                                <LoginImage />
                             </div>
                     )
                 }}
