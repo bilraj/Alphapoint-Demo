@@ -3,6 +3,10 @@ import Menu from '../store/Wallet/Menu';
 import AssetSetup from './AssetSetup';
 import './tokenStyles.css';
 import TokenSelection from './TokenSelection';
+import Contract from './Contract';
+import Verify from './Verify';
+import { Link } from 'react-router-dom';
+
 
 export default class Tokenize extends Component {
 
@@ -10,10 +14,58 @@ export default class Tokenize extends Component {
         super(props);
 
         this.state = {
-            currentStep: 2,
+            currentStep: 4,
             assetType: 'physical',
             specificAssetType: 'land',
-            tokenContract: ''
+            tokenContract: "one",
+            token: {
+                name: "",
+                symbol: "",
+                decimals: 0,
+                date: "",
+                companyName: "",
+                issuanceType: "",
+                country: ""
+            }
+        }
+    }
+
+    componentDidMount() {
+        console.log("MOUNTING")
+        if (localStorage.getItem("currentStep") !== null) {
+            this.setState(() => {
+                return {
+                    currentStep: JSON.parse(localStorage.getItem("currentStep"))
+                }
+            })
+        }
+        if (localStorage.getItem("assetType") !== null) {
+            this.setState(() => {
+                return {
+                    assetType: JSON.parse(localStorage.getItem("assetType"))
+                }
+            })
+        }
+        if (localStorage.getItem("specificAssetType") !== null) {
+            this.setState(() => {
+                return {
+                    specificAssetType: JSON.parse(localStorage.getItem("specificAssetType"))
+                }
+            })
+        }
+        if (localStorage.getItem("tokenContract") !== null) {
+            this.setState(() => {
+                return {
+                    tokenContract: JSON.parse(localStorage.getItem("tokenContract"))
+                }
+            })
+        }
+        if (localStorage.getItem("token") !== null) {
+            this.setState(() => {
+                return {
+                    token: JSON.parse(localStorage.getItem("token"))
+                }
+            })
         }
     }
 
@@ -34,18 +86,29 @@ export default class Tokenize extends Component {
             return {
                 specificAssetType: event.target.name
             }
-        })
+        },
+            () => {
+                localStorage.setItem("specificAssetType", JSON.stringify(this.state.specificAssetType))
+            })
     }
+
 
     handleSubmit = (event) => {
         const { assetType, specificAssetType } = this.state;
         console.log(`Asset type: ${assetType} and Specific asset ${specificAssetType}`);
+    }
 
+    handleTokenContract = (contract) => {
+        this.setState(() => {
+            return {
+                tokenContract: contract
+            }
+        }, () => { console.log("CONTRACT: " + this.state.tokenContract) })
     }
 
     _next = () => {
         let currentStep = this.state.currentStep;
-        currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+        currentStep = currentStep >= 3 ? 4 : currentStep + 1;
         this.setState(() => {
             return {
                 currentStep: currentStep
@@ -80,26 +143,91 @@ export default class Tokenize extends Component {
 
     get nextButton() {
         let currentStep = this.state.currentStep;
-        if (currentStep < 3) {
+        if (currentStep < 4) {
             return (
                 <div className="button1" onClick={this._next}>
                     <span>Continue</span>
                 </div>
             )
         }
+        if (currentStep === 4) {
+            return (
+                <Link to="/">
+                    <div className="button1">
+                        <span>Verify</span>
+                    </div>
+                </Link>
+
+            )
+        }
 
         return null;
+    }
+
+    /*
+                    name: "",
+                symbol: "",
+                decimals: 0,
+                date: "",
+                companyName: "",
+                issuanceType: "",
+                country: "" */
+
+    handleContract = (object) => {
+        this.setState((prevState) => {
+            let temp = { ...prevState.token };
+            temp.name = object.name;
+            temp.date = object.date;
+            temp.symbol = object.symbol;
+            temp.decimals = object.decimals;
+            temp.companyName = object.companyName;
+            temp.country = object.country;
+            return {
+                token: { ...temp }
+            }
+        }, () => {
+            localStorage.setItem("token", JSON.stringify(this.state.token));
+            // alert("OBJECT: " + JSON.stringify(this.state.token))
+        }
+        )
+    }
+
+    setIssuanceType = (type) => {
+        this.setState((prevState) => {
+            let temp = { ...prevState.token };
+            temp.issuanceType = type;
+            return {
+                token: { ...temp }
+            }
+        }, () => {
+            console.log("TYPE: " + JSON.stringify(this.state.token))
+            localStorage.setItem("token", JSON.stringify(this.state.token));
+
+        })
+    }
+
+    setTokenName = (name) => {
+        this.setState((prevState) => {
+            let temp = { ...prevState.token };
+            temp.name = name;
+            return {
+                token: { ...temp }
+            }
+        }, () => {
+            console.log("TYPE: " + JSON.stringify(this.state.token))
+            localStorage.setItem("token", JSON.stringify(this.state.token));
+
+        })
     }
 
     render() {
         return (
             <div className="container-fluid">
-                <div style={{ height: "100%", width:"100%"}} className="d-flex flex-direction-column ">
+                <div style={{ height: "100%", width: "100%" }} className="d-flex flex-direction-column ">
                     <Menu />
                     <form onSubmit={this.handleSubmit}>
-                        <div className="container-fluid" style={{width:"1100px", textAlign:"center"}}>
+                        <div className="container-fluid" style={{ width: "1100px", textAlign: "center" }}>
                             <div style={{ marginTop: "50px", marginLeft: "20px", fontWeight: "bold", color: "red" }}>
-                                <span style={{ fontSize: "26px", fontWeight: "400" }}>Step {this.state.currentStep}:</span>
                             </div>
 
                             <AssetSetup
@@ -111,11 +239,26 @@ export default class Tokenize extends Component {
                             <TokenSelection
                                 specificAssetType={this.state.specificAssetType}
                                 currentStep={this.state.currentStep}
+                                handleTokenContract={this.handleTokenContract}
+                            />
+
+                            <Contract
+                                currentStep={this.state.currentStep}
+                                setIssuanceType={this.setIssuanceType}
+                                handleContract={this.handleContract}
+                            />
+
+                            <Verify
+                                {...this.state}
+                                currentStep={this.state.currentStep}
 
                             />
                         </div>
-                        <span id="prev">{this.previousButton}</span>
-                        <span id="next">{this.nextButton}</span>
+                        <div className="d-flex justify-content-center">
+                            <span id="prev">{this.previousButton}</span>
+                            <span id="next">{this.nextButton}</span>
+                        </div>
+
 
                     </form>
 
