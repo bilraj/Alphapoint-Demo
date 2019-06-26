@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
+import { balances } from './currencydata';
 
 const WalletContext = React.createContext();
 
 export default class WalletProvider extends Component {
 
     state = {
-        balances: [{ name: "BTC", balance: 100 }],
-        modalOpen: false,
+        balances: [],
+        modalOpen: true,
         transactions: [],
+        nextId: 4,
+        send: {
+            selectedItem: { sym: "", name: "", balance: 0, conversionRate: 0, id: 0, logo: "" },
+            amount: '',
+            convertedVal: '',
+            sufficientBalance: true,
+            toAddress: '',
+            description: ''
+        },
+        tokens: []
     }
 
     componentDidMount() {
@@ -19,6 +30,12 @@ export default class WalletProvider extends Component {
                 return {
                     balances: temp
                 }
+            }, () => console.log("Found balances"))
+        } else {
+            this.setState(() => {
+                return {
+                    balances: balances
+                }
             })
         }
 
@@ -29,6 +46,34 @@ export default class WalletProvider extends Component {
                 }
             })
         }
+        if (localStorage.getItem("nextId") !== null) {
+            this.setState(() => {
+                return {
+                    nextId: JSON.parse(localStorage.getItem("nextId"))
+                }
+            })
+        }
+
+        if (localStorage.getItem("send") !== null) {
+            this.setState(() => {
+                return {
+                    send: JSON.parse(localStorage.getItem("send"))
+                }
+            })
+        } else {
+            let obj = this.state.send;
+            obj.selectedItem = { sym: "BTC", name: "Bitcoin", balance: 100, conversionRate: "", id: 0, logo: "fab fa-bitcoin" };
+
+            this.setState(() => {
+                return {
+                    send: obj
+                }
+            }, () => {
+                localStorage.setItem("send", JSON.stringify(this.state.send))
+            })
+        }
+
+
     }
 
     updateBalance = (amount, change, symbol) => {
@@ -43,19 +88,64 @@ export default class WalletProvider extends Component {
         }
 
         if (change === true) {
-            temp[i].balance += amount;
-        } else { temp[i].balance -= amount; }
+            temp[index].balance += amount;
+        } else { temp[index].balance -= amount; }
 
 
         this.setState(() => {
             return {
-                balances: { ...temp },
+                balances: temp,
             }
         }, () => {
-
             localStorage.setItem('balances', JSON.stringify(this.state.balances));
         })
     }
+
+    addNewCurrency = (object) => {
+        // { name: "Ethereum", balance: 0, id:2, logo: "fab fa-ethereum" },
+        const { name, balance } = object;
+
+        var temp = this.state.balances;
+        var found = false;
+        var index = 0;
+
+        // If already in, append
+        for (var i = 0; i < temp.length; i++) {
+            if (temp[i].name === name) {
+                index = i;
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            temp[index].balance += balance;
+
+            this.setState(() => {
+                return {
+                    balances: temp
+                }
+            }, () => {
+                localStorage.setItem("balances", this.state.balances);
+            })
+        } else {
+
+            const nextId = this.state.nextId;
+
+            // Add new
+            const newTemp = { name: name, balance: balance, id: nextId, conversionRate: 1, logo: "" };
+            this.setState(() => {
+                return {
+                    balances: [temp, newTemp],
+                    nextId: nextId + 1
+                }
+            }, () => {
+                localStorage.setItem("balances", this.state.balances);
+                localStorage.setItem("nextId", this.state.nextId);
+            })
+        }
+    }
+
 
     getTime = () => {
         const d = new Date();
@@ -72,8 +162,8 @@ export default class WalletProvider extends Component {
 
     addTransaction = (transaction) => {
         // Get amount, convertedValue, currency, toAddress
-        const { amount, convertedValue, currency, toAddress, description, flow, type } = transaction;
-        console.log(`Amount: ${amount}, ConvertedVal: ${convertedValue}, currency: ${currency}, toAddress: ${toAddress}, description: ${description}`)
+        const { amount, convertedValue, toAddress, description, flow, type } = transaction;
+        const { sym } = transaction.selectedItem;
 
         /* transaction {
             "Transaction id: [
@@ -87,6 +177,11 @@ export default class WalletProvider extends Component {
             ] " 
         } */
 
+
+        /**     var obj = {
+                        selectedItem: selectedItem, amount: amount, convertedValue: convertedVal, toAddress: toAddress, 
+                        description: description, flow: flow, type: type
+                    } */
         const date = this.getTime();
 
         var id = new Date().valueOf();;
@@ -96,7 +191,7 @@ export default class WalletProvider extends Component {
             date: date,
             amount: amount,
             convertedVal: convertedValue,
-            currency: currency,
+            sym: sym,
             toAddress: toAddress,
             description: description,
             type: type,
@@ -124,6 +219,94 @@ export default class WalletProvider extends Component {
         })
     }
 
+
+    /* Send Context */
+
+    convertValue = (amount) => {
+        if (typeof (amount) == "number") {
+            const { sym } = this.state.send.selectedItem;
+            var index = 0;
+
+            for (var x = 0; x < this.state.balances.length; ++x) {
+                if (sym === this.state.balances[x].sym) {
+                    index = x;
+                    break;
+                }
+            }
+            const { conversionRate } = this.state.balances[index];
+            var newVal = parseFloat((amount * conversionRate).toFixed(6));
+            var obj = this.state.send;
+            obj.convertedVal = newVal;
+            obj.amount = amount;
+
+            this.setState(() => {
+                return {
+                    send: obj
+                }
+            })
+        }
+    }
+
+    resetAmountBox = () => {
+        var obj = this.state.send;
+        obj.amount = '';
+        obj.convertedVal = '';
+
+        this.setState(() => {
+            return {
+                send: obj
+            }
+        })
+    }
+
+    setSufficientBalance = (isSufficient) => {
+        var obj = this.state.send;
+        obj.sufficientBalance = isSufficient;
+
+        this.setState(() => {
+            return {
+                send: obj
+            }
+        })
+    }
+
+    setToAddress = (address) => {
+        var obj = this.state.send;
+        obj.toAddress = address;
+
+        // Verify to address
+        if (address !== '') {
+            this.setState(() => {
+                return {
+                    send: obj
+                }
+            })
+        }
+    }
+
+    setDescription = (description) => {
+        var obj = this.state.send;
+        obj.description = description;
+        console.log("Setitng description: " + description)
+        this.setState(() => {
+            return {
+                send: obj
+            }
+        })
+    }
+
+    setSelectedItem = (item) => {
+        this.setState(() => {
+            var obj = this.state.send;
+            obj.selectedItem = item;
+            return {
+                send: obj
+            }
+        }, () => {
+            localStorage.setItem("send", JSON.stringify(this.state.send));
+        })
+    }
+
     render() {
         return (
             <WalletContext.Provider value={{
@@ -131,6 +314,14 @@ export default class WalletProvider extends Component {
                 updateBalance: this.updateBalance,
                 toggleModal: this.toggleModal,
                 addTransaction: this.addTransaction,
+                addNewCurrency: this.addNewCurrency,
+                convertValue: this.convertValue,
+                setSufficientBalance: this.setSufficientBalance,
+                setToAddress: this.setToAddress,
+                setDescription: this.setDescription,
+                setCurrency: this.setCurrency,
+                setSelectedItem: this.setSelectedItem,
+                resetAmountBox: this.resetAmountBox
             }}>
                 {this.props.children}
             </WalletContext.Provider>

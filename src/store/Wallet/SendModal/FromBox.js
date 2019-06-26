@@ -4,24 +4,23 @@ import WalletConsumer from '../../../WalletContext';
 
 export default class FromBox extends Component {
     state = {
-        items: this.props.items || [],
+        items: this.props.value.balances || [],
         showItems: false,
-        selectedItem: this.props.items[0]
+        selectedItem: this.props.value.balances[0],
     }
 
     render() {
-        // alert("JSJAJL " + JSON.stringify(this.props))
 
-        const { balances } = this.props;
-        const adjusted = parseFloat((balances[0].balance * 1).toFixed(2));
+        const adjusted = parseFloat((this.props.value.send.selectedItem.balance * 1).toFixed(2));
+        // alert(JSON.stringify(this.state));
 
-
+        // alert("FROMBOX: " + JSON.stringify(this.props.value.balances[0]));
+        //     { sym: "XRP", name: "Ripple",  balance: 91, id:3, conversionRate:"", logo: "fas fa-box" }
         return (
             <div className="container">
                 <div className="from-box" onClick={this.dropDown}>
                     <div id="wallet-box">
-                        <span>{this.state.selectedItem.value}</span>
-                        ({adjusted} {this.state.selectedItem.sym})
+                        <span>My {this.props.value.send.selectedItem.name} Wallet</span> ({adjusted} {this.props.value.send.selectedItem.sym})
                     </div>
                     <div id="down-icon">
                         <span><i className="fas fa-chevron-down"></i></span>
@@ -29,7 +28,8 @@ export default class FromBox extends Component {
                 </div>
                 <div style={{ display: this.state.showItems ? "block" : "none" }} className="items">
                     {
-                        this.state.items.map(item => {
+                        this.state.items.filter(it => it.name === this.props.value.send.selectedItem.name).map(item => {
+                            const adjusted = parseFloat((item.balance * 1).toFixed(2));
                             return (
                                 <div
                                     key={item.id}
@@ -40,7 +40,7 @@ export default class FromBox extends Component {
 
                                     className={this.state.selectedItem === item ? "item selected" : "item"}>
                                     <div className="row-thing">
-                                        {item.value} ({adjusted} {item.sym})
+                                        My {item.name} Wallet {item.value} ({adjusted} {item.sym})
                                     </div>
                                 </div>
 
@@ -54,12 +54,13 @@ export default class FromBox extends Component {
     }
 
     selectItem = (item) => {
+
         this.setState(() => {
             return {
                 selectedItem: item,
                 showItems: false
             }
-        })
+        }, () => console.log("Set selected item to: " + item.name))
     }
 
 

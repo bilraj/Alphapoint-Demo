@@ -33,7 +33,6 @@
 }
 
 .items {
-
     padding-left: 1rem;
     padding-top: 1rem;
     margin-top: 0.4rem;
@@ -42,7 +41,6 @@
     border-radius: 4px;
     background-color: #ffffff;
     width: 40%;
-
     position: absolute;
     z-index: 1;
 

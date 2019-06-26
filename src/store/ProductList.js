@@ -30,7 +30,7 @@ export default class ProductList extends Component {
 
     return (
       <React.Fragment>
-        <Divcontainer>
+        <Divcontainer style={{marginLeft:"auto", marginRight:"auto"}}>
           <h3 className="text-blue" style={{
             fontFamily: "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif", fontSize: "20px"
           }}> Search:</h3>

@@ -88,7 +88,7 @@
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
-    color:black;
+    color: black;
 }
 
 #total-balance-number {
@@ -107,9 +107,11 @@
 #usd-pax {
     font-size: 16px;
 }
+
 #pax {
     font-size: 12px;
 }
+
 .bitcoin {
     width: 100%;
     display: flex;
@@ -137,7 +139,7 @@
 }
 
 .buy-words {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 20px;
     color: rgb(80, 89, 87);
 }
@@ -151,5 +153,34 @@
 }
 
 .buy-row {
+    margin-top: 30px;
+}
+
+.buy-row-close {}
+
+#price-asking {
+    float: right;
+    margin-right: 5px;
+}
+
+#buy-button {
+    font-size: 24px;
+    color: var(--importantGrey);
+    border:none;
+    border-radius: 5px;
+    width: 180px;
+    height: 60px;
+    text-align: center;
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 1.4 rem;
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    background-color: var(--lightBlue);
+    margin-left: auto;
+    margin-right: auto;
     margin-top:30px;
 }

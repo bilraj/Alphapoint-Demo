@@ -21,14 +21,10 @@ export default class ToBox extends Component {
         )
     }
     render() {
+
         return (
-            <SendConsumer>
-                {(value) => {
-                    return (
-                        <input className="to-box" onChange={this.handleChange} onBlur={() => value.setToAddress(this.state.value)} value={this.state.value} type="text" placeholder="Paste, scan, or select destination" />
-                    )
-                }}
-            </SendConsumer>
-        );
+            <input className="to-box" onChange={this.handleChange} onBlur={() => this.props.setToAddress(this.state.value)} value={this.state.value} type="text" placeholder="Paste, scan, or select destination" />
+        )
+
     }
 }

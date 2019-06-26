@@ -44,7 +44,15 @@ export default class SendModal extends Component {
         return (
             <WalletConsumer>
                 {(value) => {
-                    const { modalOpen, toggleModal, updateBalance, balances } = value;
+                    const { modalOpen, toggleModal, updateBalance, setToAddress } = value;
+                    const { sufficientBalance, selectedItem, amount, convertedVal, toAddress, description } = value.send;
+                    const { name } = value.send.selectedItem;
+                    const words = sufficientBalance ? "" : "Insufficient Funds";
+                    const flow = "red";
+                    const type = "send";
+                    var obj = {
+                        selectedItem: selectedItem, amount: amount, convertedValue: convertedVal, toAddress: toAddress, description: description, flow: flow, type: type
+                    }
 
                     // 0 is sendModal
                     if (!modalOpen) {
@@ -59,20 +67,14 @@ export default class SendModal extends Component {
                                                 <i className="fas fa-paper-plane fa-lg"></i>
                                                 <span id="send-bitcoin">Send Bitcoin</span>
                                             </div>
-                                            <SendConsumer>
-                                                {(obj) => {
-                                                    return (
-                                                        <div style={{ cursor: "pointer" }} onClick={() => {
-                                                            toggleModal();
-                                                            obj.setSufficientBalance(true);
-                                                        }}
-                                                        >
-                                                            <i className="far fa-window-close fa-lg"></i>
-                                                        </div>
-                                                    )
-                                                }}
-                                            </SendConsumer>
 
+                                            <div style={{ cursor: "pointer" }} onClick={() => {
+                                                toggleModal();
+                                                value.setSufficientBalance(true);
+                                                value.resetAmountBox();
+                                            }}>
+                                                <i className="far fa-window-close fa-lg"></i>
+                                            </div>
                                         </div>
 
                                         <div className="modal-body">
@@ -81,89 +83,53 @@ export default class SendModal extends Component {
                                                 <div id="currency">
                                                     <span style={{ fontSize: "1rem", float: "left" }} >Currency</span>
                                                     <SelectBox
-                                                        items={[
-                                                            { value: 'Bitcoin', id: 1, sym: 'BTC', symbol: 'fa-bitcoin' },
-                                                            { value: 'Ethereum', id: 2, sym: 'ETH', symbol: 'fa-ethereum' }
-                                                        ]}
+                                                        value={value}
                                                     />
                                                 </div>
-
 
                                                 <div id="from">
                                                     <span style={{ fontSize: "1rem" }}>From</span>
                                                     <FromBox
-                                                        items={[
-                                                            { value: 'My Bitcoin Wallet', id: 1, sym: 'BTC', symbol: 'fa-bitcoin' },
-                                                            { value: 'My Ethereum Wallet', id: 2, sym: 'ETH', symbol: 'fa-ethereum' }
-                                                        ]}
-                                                        balances={balances}
+                                                        value={value}
                                                     />
                                                 </div>
                                             </div>
 
                                             <div id="to">
                                                 <div><span>To</span></div>
-                                                <ToBox />
+                                                <ToBox setToAddress={setToAddress} />
                                             </div>
 
+                                            <div className="usd-btc">
+                                                <div>
+                                                    <span >Amount</span>
+                                                    <span style={{ position: "relative", float: "right", color: "red", fontSize: "12px" }}>{words}</span>
+                                                </div>
+                                                <div className="usd-btc-inner">
+                                                    <AmountBox currency="BTC" placeholder="$0.00" />
+                                                    <span id="equals">=</span>
+                                                    <ReadOnlyAmountBox placeholder="0"
+                                                        value={value}
+                                                        style={{ float: "right" }} />
+                                                </div>
+                                            </div>
 
-                                            <SendConsumer>
-                                                {(value) => {
-                                                    const { sufficientBalance } = value;
-                                                    var words = sufficientBalance ? "" : "Insufficient Funds";
-                                                    return (
-                                                        <div className="usd-btc">
-                                                            <div>
-                                                                <span >Amount</span>
-                                                                {/* <span
-                                                                    style={{ position: "relative", float: "right", fontSize: "12px", color: sufficientBalance ? "green" : "red" }} hidden
-                                                                >{words}</span> */}
-                                                                <span style={{ position: "relative", float: "right", color: "red", fontSize: "12px" }}>{words}</span>
-                                                            </div>
-                                                            <div className="usd-btc-inner">
-                                                                <AmountBox currency="BTC" placeholder="$0.00" />
-                                                                <span id="equals">=</span>
-                                                                <ReadOnlyAmountBox placeholder="0"
-                                                                    style={{ float: "right" }} />
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                }}
-                                            </SendConsumer>
 
                                             <div className="description">
                                                 <div><span >Description</span></div>
-                                                <DescriptionBox placeholder="What's the transaction for? (optional)" />
+                                                <DescriptionBox setDescription={value.setDescription} placeholder="What's the transaction for? (optional)" />
                                             </div>
-
-
-                                            <SendConsumer>
-                                                {(val) => {
-                                                    const { currency, amount, convertedValue, toAddress, description, sufficientBalance } = val;
-                                                    const flow = "red";
-                                                    const type = "send";
-                                                    var obj = {
-                                                        currency: currency, amount: amount, convertedValue: convertedValue, toAddress: toAddress, description: description, flow: flow, type: type 
-                                                    };
-
-                                                    return (
-                                                        <div className="send-button">
-                                                            <ButtonContainer style={{ height: "40px" }}
-                                                                onClick={() => {
-                                                                    if (sufficientBalance) {
-                                                                        value.addTransaction(obj);
-                                                                        updateBalance(convertedValue, false, currency);
-                                                                        toggleModal();
-                                                                    }
-                                                                }}
-                                                            >Send </ButtonContainer>
-                                                        </div>
-                                                    )
-                                                }}
-                                            </SendConsumer>
-
-
-
+                                            <div className="send-button">
+                                                <ButtonContainer style={{ height: "40px" }}
+                                                    onClick={() => {
+                                                        if (sufficientBalance) {
+                                                            value.addTransaction(obj);
+                                                            updateBalance(convertedVal, false, name);
+                                                            toggleModal();
+                                                        }
+                                                    }}
+                                                >Send </ButtonContainer>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -172,7 +138,6 @@ export default class SendModal extends Component {
                             </ModalWrapper>
                         )
                     }
-
                 }}
             </WalletConsumer>
 

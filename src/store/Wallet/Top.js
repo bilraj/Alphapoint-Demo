@@ -15,7 +15,7 @@ export default class Top extends Component {
                         <TokenConsumer>
                             {(val) => {
                                 const { haveToken, balance } = val;
-                                const { symbol } = val.token;
+                                const { symbol } = val.tokens;
 
                                 return (
                                     <React.Fragment>

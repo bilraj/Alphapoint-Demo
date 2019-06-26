@@ -15,7 +15,7 @@ export default class Tokenize extends Component {
         super(props);
 
         this.state = {
-            currentStep: 4,
+            currentStep: 1,
             assetType: 'physical',
             specificAssetType: 'land',
             tokenContract: "one",
@@ -226,7 +226,8 @@ export default class Tokenize extends Component {
             <div className="container-fluid">
                 <div style={{ height: "100%", width: "100%" }} className="d-flex flex-direction-column ">
                     <Menu />
-                    <form onSubmit={this.handleSubmit}>
+                    <div>
+
                         <div className="container-fluid" style={{ width: "1100px", textAlign: "center" }}>
                             <div style={{ marginTop: "50px", marginLeft: "20px", fontWeight: "bold", color: "red" }}>
                             </div>
@@ -259,11 +260,11 @@ export default class Tokenize extends Component {
                             <span id="prev">{this.previousButton}</span>
                             <span id="next">{this.nextButton}</span>
                         </div>
+                    </div>
 
 
-                    </form>
 
-                  
+
 
                     {/* <span id="welcome-text">Asset Tokenization</span> */}
                 </div>

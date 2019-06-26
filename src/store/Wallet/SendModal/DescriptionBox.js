@@ -27,7 +27,7 @@ export default class DescriptionBox extends Component {
         <SendConsumer>
             {(value) => {
                 return (
-                    <textarea onChange={this.handleChange} onBlur={() => value.setDescription(this.state.value)} value={this.state.value} style={{resize:"none"}} className="desc-box" type="text" value={this.state.value} placeholder={this.props.placeholder}> </textarea> 
+                    <textarea onChange={this.handleChange} onBlur={() => this.props.setDescription(this.state.value)} value={this.state.value} style={{resize:"none"}} className="desc-box" type="text" value={this.state.value} placeholder={this.props.placeholder}> </textarea> 
                 )
             }}
         </SendConsumer>

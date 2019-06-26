@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import "./styles.css";
 import { WalletConsumer } from '../../../WalletContext';
-import { TokenConsumer } from '../../../TokenContext';
 
 
 export default class Table extends Component {
@@ -28,6 +27,7 @@ export default class Table extends Component {
         }
         else {
             const { balances } = this.props.value;
+
             var newCurrencies = this.state.currencies.filter(item => item.id !== 0);
             const newBtc = { id: 0, name: "BTC", balance: balances[0].balance, conversionRate: 10558, logo: "fab fa-bitcoin" };
 
@@ -45,10 +45,6 @@ export default class Table extends Component {
                 }
             })
         }
-
-
-        console.log("BALANCE HERE IS: " + this.state.currencies[0].balance)
-
     }
 
     handleClick = () => {
@@ -79,9 +75,9 @@ export default class Table extends Component {
             <WalletConsumer>
                 {(value) => {
                     const { balances } = value;
-                    const balance = balances[0].balance;
-                    if(balances.length > 1) {
-                        balance += balances[1].balance;
+                    var balance = balances[0].balance;
+                    if (balances.length === 5) {
+                        balance += balances[4].balance;
                     }
 
                     const usd = parseFloat((balance * 10601).toFixed(2)).toLocaleString(navigator.language, { minimumFractionDigits: 0 });
@@ -97,55 +93,26 @@ export default class Table extends Component {
                                 </div>
                             </div>
 
-                            <TokenConsumer>
-                                {(val) => {
-                                    const { haveToken, balance } = val;
-                                    const { name, symbol, id } = val.token;
-
-                                    var item = {
-                                        id: id,
-                                        name: name,
-                                        balance: balance,
-                                        symbol: symbol
-                                    }
-
-                                    return (
-                                        <div>
-                                            <div>
-                                                {
-                                                    this.state.currencies.map((item) => {
-                                                        return (
-                                                            <div key={item.id} className="usd-pax">
-                                                                <div className="left-header">
-                                                                    <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
-                                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
-                                                                </div>
-                                                                <div className="right-header">
-                                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
-                                                                    <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
-                                                                </div>
-                                                            </div>
-
-                                                        )
-                                                    })
-                                                }
+                            <div>
+                                {
+                                    this.state.currencies.map((item) => {
+                                        return (
+                                            <div key={item.id} className="usd-pax">
+                                                <div className="left-header">
+                                                    <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
+                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
+                                                </div>
+                                                <div className="right-header">
+                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
+                                                    <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
+                                                </div>
                                             </div>
-                                            {
-                                                haveToken ? (<div key={item.id} className="usd-pax">
-                                                    <div className="left-header">
-                                                        <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
-                                                        <span id="usd-pax" className="balance-table-words">{item.name}</span>
-                                                    </div>
-                                                    <div className="right-header">
-                                                        <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
-                                                        <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.symbol}</span>
-                                                    </div>
-                                                </div>) : {}
-                                            }
-                                        </div>
-                                    )
-                                }}
-                            </TokenConsumer>
+
+                                        )
+                                    })
+                                }
+                            </div>
+
 
 
                             {/* Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />

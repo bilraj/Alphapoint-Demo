@@ -15,7 +15,6 @@ import TokenProvider from './TokenContext';
 
 ReactDOM.render(
     <TokenProvider>
-
         <LoginProvider>
             <ProductProvider>
                 <WalletProvider>

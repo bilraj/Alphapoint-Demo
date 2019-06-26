@@ -33,34 +33,28 @@ export default class ReadOnlyAmountBox extends Component {
         )
     }
     render() {
+        const { convertedVal, sufficientBalance } = this.props.value.send;
+        const { sym } = this.props.value.send.selectedItem;
+
         return (
-            <SendConsumer>
-                {(value) => {
-                    const { convertedValue, sufficientBalance } = value;
+            <TokenConsumer>
+                {(val) => {
+                    const { haveToken } = val;
+                    var currency = haveToken ? val.token.symbol : "BTC";
                     return (
-                        <TokenConsumer>
-                            {(val) => {
-                                const { haveToken } = val;
-                                var currency = haveToken ? val.token.symbol : "BTC";
-                                return (
-                                    <div className="amount-box" style={{ borderColor: sufficientBalance ? "" : "red" }}>
-                                        <input id="subdomain" type="text" onChange={this.handleChange} value={convertedValue} placeholder={this.state.placeholder}
-                                            value={convertedValue}
-                                            readOnly />
-                                        <input type="text" id="subdomaintwo" value={currency} disabled />
-                                    </div>
-                                )
-                            }}
-                        </TokenConsumer>
+                        <div className="amount-box" style={{ borderColor: sufficientBalance ? "" : "red" }}>
+                            <input id="subdomain" type="text" onChange={this.handleChange} value={convertedVal} placeholder={this.state.placeholder}
+                                readOnly />
+                            <input type="text" id="subdomaintwo" value={sym} disabled />
+                        </div>
                     )
-
-
                 }}
-            </SendConsumer>
+            </TokenConsumer>
+        )
 
 
 
 
-        );
+
     }
 }

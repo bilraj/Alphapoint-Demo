@@ -16,9 +16,23 @@ export default class Dashboard extends Component {
         {(value) => {
           console.log("Walets value " + value.balances[0])
           return (
+            // state = {
+            //     token: {
+            //         id: 1021,
+            //         name: "",
+            //         symbol: "",
+            //         decimals: 0,
+            //         date: "",
+            //         companyName: "",
+            //         issuanceType: "",
+            //         country: ""
+            //     },
+            //     balance: 0,
+            //     haveToken: false,
+            // }
+
             <TokenConsumer>
               {(val) => {
-                const { haveToken } = val;
                 return (
                   <div className="cont">
                     <Menu />
@@ -26,9 +40,7 @@ export default class Dashboard extends Component {
                       <Top />
                       <div style={{ display: "flex", flexDirection: "row", height: "auto", width: "100%" }}>
                         <Table value={value} />
-                        {
-                          haveToken ? <BuyTable value={val} /> : {}
-                        }
+                        <BuyTable addNewCurrency={value.addNewCurrency} value={val} />
                       </div>
 
                     </div>

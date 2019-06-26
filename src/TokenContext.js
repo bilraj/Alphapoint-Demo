@@ -4,18 +4,19 @@ const TokenContext = React.createContext();
 export default class TokenProvider extends React.Component {
 
     state = {
-        token: {
-            id: 1021,
-            name: "",
-            symbol: "",
-            decimals: 0,
-            date: "",
-            companyName: "",
-            issuanceType: "",
-            country: ""
-        },
-        balance: 0,
-        haveToken: false,
+        tokens: [
+            {
+                id: "",
+                name: "",
+                symbol: "",
+                decimals: 0,
+                date: "",
+                companyName: "",
+                issuanceType: "",
+                country: "",
+                balance: 0
+            }
+        ]
     }
 
     componentDidMount() {
