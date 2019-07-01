@@ -108,9 +108,16 @@ export default class BuyTable extends Component {
     get nextButton() {
         let { currentStep } = this.state;
 
-        if (currentStep !== 4 && currentStep !== 1) {
+        if (currentStep === 2) {
             return (
                 <ButtonContainer onClick={this.handleSubmitBillingAddress}>
+                    Next
+                </ButtonContainer>
+            )
+        }
+        else if (currentStep === 3) {
+            return (
+                <ButtonContainer onClick={this.handleSubmitPayment}>
                     Next
                 </ButtonContainer>
             )

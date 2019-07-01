@@ -252,44 +252,39 @@ export default class Tokenize extends Component {
 
     render() {
         return (
-            <div className="container-fluid">
-                <div style={{ height: "100%", width: "100%" }} className="d-flex flex-direction-column ">
-                    <Menu />
-                    <div>
-                        <div className="container-fluid" style={{ width: "1100px", textAlign: "center" }}>
-                            <div style={{ marginTop: "50px", marginLeft: "20px", fontWeight: "bold", color: "red" }}>
-                            </div>
+            <div className="cont">
+                <Menu />
+                <div style={{ height: "100%", width: "100%" }} id="p">
+                    <div style={{ width: "1100px", textAlign: "center" }}>
+                          <AssetSetup
+                            currentStep={this.state.currentStep}
+                            assetType={this.state.assetType}
+                            handleAssetChange={this.handleAssetChange.bind(this)}
+                            handleSpecificAssetChange={this.handleSpecificAssetChange.bind(this)} />
 
-                            <AssetSetup
-                                currentStep={this.state.currentStep}
-                                assetType={this.state.assetType}
-                                handleAssetChange={this.handleAssetChange.bind(this)}
-                                handleSpecificAssetChange={this.handleSpecificAssetChange.bind(this)} />
+                        <TokenSelection
+                            specificAssetType={this.state.specificAssetType}
+                            currentStep={this.state.currentStep}
+                            handleTokenContract={this.handleTokenContract}
+                        />
 
-                            <TokenSelection
-                                specificAssetType={this.state.specificAssetType}
-                                currentStep={this.state.currentStep}
-                                handleTokenContract={this.handleTokenContract}
-                            />
+                        <Contract
+                            currentStep={this.state.currentStep}
+                            setIssuanceType={this.setIssuanceType}
+                            handleContract={this.handleContract}
+                        />
 
-                            <Contract
-                                currentStep={this.state.currentStep}
-                                setIssuanceType={this.setIssuanceType}
-                                handleContract={this.handleContract}
-                            />
-
-                            <Verify
-                                {...this.state}
-                                currentStep={this.state.currentStep}
-                            />
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <span id="prev">{this.previousButton}</span>
-                            <span id="next">{this.nextButton}</span>
-                        </div>
+                        <Verify
+                            {...this.state}
+                            currentStep={this.state.currentStep}
+                        />
                     </div>
-                    {/* <span id="welcome-text">Asset Tokenization</span> */}
+                    <div style={{marginLeft: this.state.currentStep === 1 ? "30%" : ""}} className="bottom-buttons">
+                        <span id="prev">{this.previousButton}</span>
+                        <span id="next">{this.nextButton}</span>
+                    </div>
                 </div>
+                {/* <span id="welcome-text">Asset Tokenization</span> */}
             </div>
 
         );
