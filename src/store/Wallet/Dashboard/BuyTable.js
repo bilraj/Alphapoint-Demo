@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import './styles.css'
+import BuyForm from './BuyForm';
+import { CheckoutFormA, CheckoutFormB } from './CheckoutForm';
+import CheckoutTop from './CheckoutTop';
+import { ButtonContainer } from '../../Button';
 
 
 export default class BuyTable extends Component {
@@ -7,7 +11,20 @@ export default class BuyTable extends Component {
         super(props);
 
         this.state = {
-            amount: ''
+            amount: '318.2',
+            paymentSuccess: false,
+            currentStep: 3,
+            fullName: "",
+            email: "",
+            address: "",
+            city: "",
+            state: "",
+            zip: "",
+            nameOnCard: "",
+            creditCardNumber: "",
+            expirationMonth: "",
+            expirationYear: "",
+            cvv: 0
         }
     }
 
@@ -22,7 +39,8 @@ export default class BuyTable extends Component {
 
     handleSubmit = () => {
         if (isNaN(this.state.amount)) return null;
-        const {name} = this.props;
+
+        const { name } = this.props.value.tokens[0];
 
         // Add currency
         var obj = {
@@ -30,56 +48,153 @@ export default class BuyTable extends Component {
             balance: Number(this.state.amount)
         }
 
-        this.props.addNewCurrency(obj)
+        if (this.props.addNewCurrency(obj)) {
+            this.setState(() => {
+                return {
+                    paymentSuccess: true,
+                }
+            })
+        }
+    }
+
+    handleFieldChange = (event) => {
+        const field = event.target.name;
+        const value = event.target.value;
+
+        this.setState(() => {
+            return {
+                [field]: value
+            }
+        }, () => {
+        })
+    }
+
+    updateCurrentStep = () => {
+        console.log("STEP: " + this.state.currentStep);
+        if (this.state.currentStep === 1) {
+            if (this.state.amount === '') {
+                return null;
+            }
+            else {
+                this.setState((prevState) => {
+                    return {
+                        currentStep: (prevState.currentStep + 1)
+                    }
+                })
+            }
+        }
+    }
+
+    _prev = () => {
+        let { currentStep } = this.state;
+        currentStep = currentStep <= 1 ? 1 : currentStep - 1;
+        this.setState(() => {
+            return {
+                currentStep: currentStep
+            }
+        })
+    }
+
+    _next = () => {
+        let { currentStep } = this.state;
+        currentStep = currentStep >= 4 ? 1 : currentStep + 1;
+        this.setState(() => {
+            return {
+                currentStep: currentStep
+            }
+        })
+    }
+
+    get nextButton() {
+        let { currentStep } = this.state;
+
+        if (currentStep !== 4 && currentStep !== 1) {
+            return (
+                <ButtonContainer onClick={this.handleSubmitBillingAddress}>
+                    Next
+                </ButtonContainer>
+            )
+        }
+    }
+
+    get previousButton() {
+        let { currentStep } = this.state;
+        if (currentStep !== 1) {
+            return (
+                <ButtonContainer onClick={this._prev}>
+                    Back
+                </ButtonContainer>
+            )
+        }
+    }
+
+    handleSubmitBillingAddress = () => {
+        console.log("Validating");
+        if (this.allBillingFieldsValid()) {
+            this._next();
+        }
+    }
+
+    handleSubmitPayment = () => {
+        if (this.allPaymentFieldsValid()) {
+            this._next();
+        }
+    }
+
+    allPaymentFieldsValid = () => {
+        const { nameOnCard, creditCardNumber, expirationMonth, expirationYear, cvv } = this.state;
+
+        if (nameOnCard === '' ||
+            creditCardNumber === '' ||
+            expirationMonth === '' ||
+            expirationYear === '' ||
+            cvv === ''
+        ) {
+            return false;
+        }
+        return true;
+
+    }
+
+    allBillingFieldsValid = () => {
+        const { fullName, address, email, city, state, zip } = this.state;
+        if (fullName === '' ||
+            address === '' ||
+            email === '' ||
+            city === '' ||
+            state === '' ||
+            zip === '') {
+            return false;
+        }
+        return true;
     }
 
     render() {
-        const { symbol } = this.props.value.tokens;
-        
+        if (this.props.value.tokens.length === 0) return null;
+        const { symbol } = this.props.value.tokens[0];
         // If no new coin, add to wallet
         return (
             <div className="buy-container">
-                <div className="table-words">
-                    <span>Purchase {symbol}</span>
-                    <hr style={{ width: "85%" }}></hr>
+                <CheckoutTop currentStep={this.state.currentStep} symbol={symbol} amount={this.state.amount} />
+                <BuyForm symbol={symbol} value={this.state} updateCurrentStep={this.updateCurrentStep} handleChange={this.handleChange} currentStep={this.state.currentStep} />
+                <CheckoutFormA handleSubmitBillingAddress={this.handleSubmitBillingAddress} handleFieldChange={this.handleFieldChange} symbol={symbol} amount={this.state.amount} currentStep={this.state.currentStep} />
+                <CheckoutFormB handleSubmitPayment={this.handleSubmitPayment} handleFieldChange={this.handleFieldChange} symbol={symbol} amount={this.state.amount} currentStep={this.state.currentStep} />
+                <div className="buttons">
+                    <span>{this.previousButton}</span>
+                    <span>{this.nextButton}</span>
                 </div>
 
-                <div className="buy-row">
-                    <span className="buy-words">Amount ({symbol}) </span> <br></br>
-                    <span><input value={this.state.amount} onChange={this.handleChange}
-                        className="buy-input" type="text"></input></span>
-                </div>
-                <div className="buy-row">
-                    <span className="buy-words">Price (USD)</span>
-                </div>
 
-                <hr style={{ width: "85%" }}></hr>
-                <div className="buy-row-close">
-                    <span className="buy-words">Asking Price (USD)</span>
-                    <span className="buy-words" id="price-asking">500.00</span>
-                </div>
-                <div className="buy-row-close">
-                    <span className="buy-words">Fees</span>
-                    <span className="buy-words" id="price-asking">None</span>
-                </div>
-                <div className="buy-row-close">
-                    <span className="buy-words">Order Total (USD)</span>
-                    <span className="buy-words" id="price-asking">{(500 * this.state.amount).toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</span>
-                </div>
-                <div onClick={() => this.handleSubmit} id="buy-button">
-                    <span>Checkout</span>
-                </div>
-
-                <hr style={{ width: "85%" }}></hr>
-                <div className="buy-row-close">
-                    <span className="buy-words">USD Balance: </span>
-                    <span className="buy-words" id="price-asking">{(500 * this.state.amount).toLocaleString(navigator.language, { minimumFractionDigits: 0 })}</span>
-                </div>
             </div>
         )
     }
 }
 
+// var Input = React.createClass({
+//     render: function() {
+//         return <input type="text" onKeyDown={this._handleKeyDown} />;
+//     }
+// })
 
 
 

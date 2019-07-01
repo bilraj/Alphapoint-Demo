@@ -69,59 +69,66 @@ export default class Table extends Component {
         })
     }
 
+    calculateTotalBalance = (balances) => {
+        var total = 0;
+
+        balances.forEach((element) => {
+            total += (element.balance / element.conversionRate);
+        })
+        return total;
+
+
+    }
+
+    localize = (num) => {
+        return parseFloat(num.toFixed(2)).toLocaleString(navigator.language, { minimumFractionDigits: 0 });
+    }
+
+    fix = (num) => {
+        return parseFloat(num).toFixed(2);
+    }
+
     render() {
-
+        const { balances } = this.props.value;
+        var totalBalance = this.localize(this.calculateTotalBalance(balances));
+        
         return (
-            <WalletConsumer>
-                {(value) => {
-                    const { balances } = value;
-                    var balance = balances[0].balance;
-                    if (balances.length === 5) {
-                        balance += balances[4].balance;
+            <div className="table-container-1">
+                <div className="table-header">
+                    <div className="left-header">
+                        <span className="balance-table-words noselect">Total Balance</span>
+                    </div>
+                    <div className="right-header noselect">
+                        <span className="balance-table-words" id="total-balance-number">${totalBalance}</span>
+                    </div>
+                </div>
+
+                <div>
+                    {
+                        balances.map((item) => {
+                            var balance = this.localize(item.balance / item.conversionRate);
+                            return (
+                                <div key={item.id} className="usd-pax">
+                                    <div className="left-header">
+                                        <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
+                                        <span id="usd-pax" className="balance-table-words">{item.name}</span>
+                                    </div>
+                                    <div className="right-header">
+                                        <span className="balance-table-words" id="total-balance-number">${balance}</span>
+                                        <span id="pax">{this.localize(item.balance)} {item.name}</span>
+                                    </div>
+                                </div>
+
+                            )
+                        })
                     }
-
-                    const usd = parseFloat((balance * 10601).toFixed(2)).toLocaleString(navigator.language, { minimumFractionDigits: 0 });
-                    const adjusted = parseFloat((balance * 1).toFixed(2));
-                    return (
-                        <div className="table-container-1">
-                            <div className="table-header">
-                                <div className="left-header">
-                                    <span className="balance-table-words">Total Balance</span>
-                                </div>
-                                <div className="right-header">
-                                    <span className="balance-table-words" id="total-balance-number">${usd}</span>
-                                </div>
-                            </div>
-
-                            <div>
-                                {
-                                    this.state.currencies.map((item) => {
-                                        return (
-                                            <div key={item.id} className="usd-pax">
-                                                <div className="left-header">
-                                                    <span style={{ marginRight: "8px" }}><i className={item.logo}></i></span>
-                                                    <span id="usd-pax" className="balance-table-words">{item.name}</span>
-                                                </div>
-                                                <div className="right-header">
-                                                    <span className="balance-table-words" id="total-balance-number">${item.id === 0 ? usd : item.balance}</span>
-                                                    <span id="pax">{item.id === 0 ? adjusted : item.balance} {item.name}</span>
-                                                </div>
-                                            </div>
-
-                                        )
-                                    })
-                                }
-                            </div>
+                </div>
 
 
 
-                            {/* Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />
+                {/* Name: <input value={this.state.value} onChange={this.handleChange} type="text" placeholder="New currency" />
                             <button onClick={this.handleClick}>Add</button> */}
-                        </div>
-                    )
-                }}
-            </WalletConsumer>
-
-        );
+            </div>
+        )
     }
 }

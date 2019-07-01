@@ -37,10 +37,11 @@ export default class Dashboard extends Component {
                   <div className="cont">
                     <Menu />
                     <div className="container-fluid" id="top-balance" >
-                      <Top />
-                      <div style={{ display: "flex", flexDirection: "row", height: "auto", width: "100%" }}>
+                      <Top value={value} />
+                      <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-beetween", height: "auto", width: "100%" }}>
                         <Table value={value} />
-                        <BuyTable addNewCurrency={value.addNewCurrency} value={val} />
+                        <div className="vertical-line"></div>
+                        <BuyTable addNewCurrency={value.addNewCurrency} value={value} />
                       </div>
 
                     </div>

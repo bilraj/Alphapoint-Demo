@@ -119,17 +119,29 @@ export default class SendModal extends Component {
                                                 <div><span >Description</span></div>
                                                 <DescriptionBox setDescription={value.setDescription} placeholder="What's the transaction for? (optional)" />
                                             </div>
-                                            <div className="send-button">
-                                                <ButtonContainer style={{ height: "40px" }}
-                                                    onClick={() => {
-                                                        if (sufficientBalance) {
-                                                            value.addTransaction(obj);
-                                                            updateBalance(convertedVal, false, name);
-                                                            toggleModal();
-                                                        }
-                                                    }}
-                                                >Send </ButtonContainer>
+                                            <div className="send-cancel-container">
+                                                <div className="send-button">
+                                                    <ButtonContainer style={{ height: "40px" }}
+                                                        onClick={() => {
+                                                            if (sufficientBalance) {
+                                                                toggleModal();
+                                                            }
+                                                        }}
+                                                    >Cancel </ButtonContainer>
+                                                </div>
+                                                <div className="send-button">
+                                                    <ButtonContainer style={{ height: "40px" }}
+                                                        onClick={() => {
+                                                            if (sufficientBalance) {
+                                                                value.addTransaction(obj);
+                                                                updateBalance(convertedVal, false, name);
+                                                                toggleModal();
+                                                            }
+                                                        }}
+                                                    >Send </ButtonContainer>
+                                                </div>
                                             </div>
+
 
                                         </div>
                                     </div>

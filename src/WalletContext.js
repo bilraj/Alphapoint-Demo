@@ -7,7 +7,7 @@ export default class WalletProvider extends Component {
 
     state = {
         balances: [],
-        modalOpen: true,
+        modalOpen: false,
         transactions: [],
         nextId: 4,
         send: {
@@ -18,7 +18,7 @@ export default class WalletProvider extends Component {
             toAddress: '',
             description: ''
         },
-        tokens: []
+        tokens: [],
     }
 
     componentDidMount() {
@@ -36,6 +36,8 @@ export default class WalletProvider extends Component {
                 return {
                     balances: balances
                 }
+            }, () => {
+                localStorage.setItem("balances", JSON.stringify(this.state.balances))
             })
         }
 
@@ -73,6 +75,15 @@ export default class WalletProvider extends Component {
             })
         }
 
+        if (localStorage.getItem("tokens") !== null) {
+            this.setState(() => {
+                return {
+                    tokens: JSON.parse(localStorage.getItem("tokens"))
+                }
+            })
+
+        }
+
 
     }
 
@@ -104,7 +115,7 @@ export default class WalletProvider extends Component {
     addNewCurrency = (object) => {
         // { name: "Ethereum", balance: 0, id:2, logo: "fab fa-ethereum" },
         const { name, balance } = object;
-
+        
         var temp = this.state.balances;
         var found = false;
         var index = 0;
@@ -114,6 +125,7 @@ export default class WalletProvider extends Component {
             if (temp[i].name === name) {
                 index = i;
                 found = true;
+                alert("Found")
                 break;
             }
         }
@@ -126,22 +138,22 @@ export default class WalletProvider extends Component {
                     balances: temp
                 }
             }, () => {
-                localStorage.setItem("balances", this.state.balances);
+                localStorage.setItem("balances", JSON.stringify(this.state.balances));
             })
         } else {
-
             const nextId = this.state.nextId;
+            object.id = nextId;
 
             // Add new
             const newTemp = { name: name, balance: balance, id: nextId, conversionRate: 1, logo: "" };
             this.setState(() => {
                 return {
-                    balances: [temp, newTemp],
+                    balances: [...this.state.balances, object],
                     nextId: nextId + 1
                 }
             }, () => {
-                localStorage.setItem("balances", this.state.balances);
-                localStorage.setItem("nextId", this.state.nextId);
+                localStorage.setItem("balances", JSON.stringify(this.state.balances));
+                localStorage.setItem("nextId", JSON.stringify(this.state.nextId));
             })
         }
     }
@@ -307,6 +319,17 @@ export default class WalletProvider extends Component {
         })
     }
 
+    addToken = (object) => {
+        this.setState((prevState) => {
+            return {
+                tokens: [...prevState.tokens, object]
+            }
+        }, () => {
+            alert("Tokens: " + JSON.stringify(this.state.tokens))
+            localStorage.setItem("tokens", JSON.stringify(this.state.tokens));
+        })
+    }
+
     render() {
         return (
             <WalletContext.Provider value={{
@@ -321,7 +344,8 @@ export default class WalletProvider extends Component {
                 setDescription: this.setDescription,
                 setCurrency: this.setCurrency,
                 setSelectedItem: this.setSelectedItem,
-                resetAmountBox: this.resetAmountBox
+                resetAmountBox: this.resetAmountBox,
+                addToken: this.addToken
             }}>
                 {this.props.children}
             </WalletContext.Provider>

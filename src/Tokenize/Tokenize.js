@@ -93,7 +93,6 @@ export default class Tokenize extends Component {
             })
     }
 
-
     handleSubmit = (event) => {
         const { assetType, specificAssetType } = this.state;
         console.log(`Asset type: ${assetType} and Specific asset ${specificAssetType}`);
@@ -151,14 +150,13 @@ export default class Tokenize extends Component {
                 </div>
             )
         }
-        if (currentStep === 4) {
+        else if (currentStep === 4) {
             return (
                 <Link to="/">
-                    <div className="button1">
+                    <div className="button1" onClick={() => this.registerToken()}>
                         <span>Verify</span>
                     </div>
                 </Link>
-
             )
         }
 
@@ -221,13 +219,43 @@ export default class Tokenize extends Component {
         })
     }
 
+    registerToken = () => {
+        var obj = {
+            sym: this.state.token.symbol,
+            name: this.state.token.name,
+            balance: 0,
+            conversionRate: 1,
+            logo: "fas fa-box"
+        }
+
+        var token = {
+            id: this.props.nextId,
+            name: this.state.token.name,
+            symbol: this.state.token.symbol,
+            decimals: this.state.token.decimals,
+            date: this.state.token.date,
+            companyName: this.state.token.companyName,
+            issuanceType: this.state.token.issuanceType,
+            country: this.state.token.country,
+            balance: 0
+        }
+
+        alert("TOKEN: " + JSON.stringify(token));
+        alert("OBJ: " + JSON.stringify(obj));
+
+
+        alert("Registering")
+
+        this.props.value.addNewCurrency(obj);
+        this.props.value.addToken(token)
+    }
+
     render() {
         return (
             <div className="container-fluid">
                 <div style={{ height: "100%", width: "100%" }} className="d-flex flex-direction-column ">
                     <Menu />
                     <div>
-
                         <div className="container-fluid" style={{ width: "1100px", textAlign: "center" }}>
                             <div style={{ marginTop: "50px", marginLeft: "20px", fontWeight: "bold", color: "red" }}>
                             </div>
@@ -253,7 +281,6 @@ export default class Tokenize extends Component {
                             <Verify
                                 {...this.state}
                                 currentStep={this.state.currentStep}
-
                             />
                         </div>
                         <div className="d-flex justify-content-center">
@@ -261,11 +288,6 @@ export default class Tokenize extends Component {
                             <span id="next">{this.nextButton}</span>
                         </div>
                     </div>
-
-
-
-
-
                     {/* <span id="welcome-text">Asset Tokenization</span> */}
                 </div>
             </div>

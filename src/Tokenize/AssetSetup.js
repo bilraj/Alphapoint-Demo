@@ -40,17 +40,9 @@ const AssetSetup = (props) => {
                         props.assetType === "physical" ?
                             <Physical assetType={props.assetType} handleSpecificAssetChange={props.handleSpecificAssetChange.bind(props)} specificAssetType={props.specificAssetType} /> :
                             <Financial assetType={props.assetType} handleSpecificAssetChange={props.handleSpecificAssetChange.bind(props)} specificAssetType={props.specificAssetType} />
-
                     }
                 </div>
             </div>
-
-
-            {/* <div className="button">
-               <span>Continue</span>
-            </div> */}
-
-
 
         </div>
     )

@@ -17,7 +17,7 @@ export default class Dashboard extends Component {
                             <div style={{ height: "100%" }} className="d-flex flex-direction-column">
                                 <Menu />
                                 <div className="container-fluid" id="top-balance" >
-                                    <Top />
+                                    <Top value={value}/>
                                     <TransactionTable value={value} />
                                 </div>
                             </div>

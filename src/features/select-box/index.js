@@ -35,7 +35,6 @@ export default class SelectBox extends Component {
                         </div>
                         <div className="col-3">
                             <span style={{ float: "right", marginRight: "1rem" }}><i style={{ right: "0" }} className="fas fa-chevron-down"></i></span>
-
                         </div>
                     </div>
                 </div>

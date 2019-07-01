@@ -62,7 +62,7 @@ export default class AmountBox extends Component {
                 {(walletValue) => {
                     return (
                         <div className="amount-box" style={{ borderColor: this.state.sufficientBalance ? "" : "red" }}>
-                            <input id="subdomain" type="text"
+                            <input id="subdomain" type="number"
                                 onInput={this.handleChange}
                                 onChange={(e) => walletValue.convertValue(Number(e.target.value))}
                                 onBlur={() => this.validateBalance(Number(this.state.value), walletValue.setSufficientBalance, walletValue.send.selectedItem)}

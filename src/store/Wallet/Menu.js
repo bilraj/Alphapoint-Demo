@@ -16,7 +16,7 @@ export default class Menu extends Component {
                         Dashboard
                     </ButtonContainer>
                 </Link>
-                
+
                 <Link to="/wallet/transactions" className="nav-item">
                     <ButtonContainer selected className="px-3 py-2">
                         <span className="mr-2"><i className="fas fa-money-check-alt"></i>

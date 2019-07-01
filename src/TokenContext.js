@@ -20,7 +20,7 @@ export default class TokenProvider extends React.Component {
     }
 
     componentDidMount() {
-        if (localStorage.getItem("token")) {
+        if (localStorage.getItem("tokens")) {
             const temp = JSON.parse(localStorage.getItem("token"))
             this.setState(() => {
                 return {
@@ -30,6 +30,14 @@ export default class TokenProvider extends React.Component {
             }, () => {
             })
         }
+    }
+
+    setHaveToken = (haveToken) => {
+        this.setState(() => {
+            return {
+                
+            }
+        })
     }
 
     render() {

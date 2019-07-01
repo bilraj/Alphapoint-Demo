@@ -32,7 +32,6 @@ const Verify = (props) => {
                     </div>
                     <div className="verify-row ml-4">
                         <span className="verify-headers"><span className="text-capitalize">{assetType}</span> Asset:</span> <span className="ml-3 verify-fields text-capitalize"> {specificAssetType}</span>
-
                     </div>
                     <div className="verify-row ml-4">
                         <span className="verify-headers"> Token Contract:</span> <span className="ml-3 verify-fields text-capitalize"> {dict[tokenContract]}</span>

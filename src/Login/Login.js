@@ -16,38 +16,47 @@ import SendModal from '../store/Wallet/SendModal/SendModal';
 import Transactions from '../store/Wallet/Transactions/Transactions';
 import { Switch, Route } from 'react-router-dom';
 import Tokenize from '../Tokenize/Tokenize';
+import { WalletConsumer } from '../WalletContext';
 
 
 
 export default class Login extends Component {
     render() {
         return (
-            <LoginConsumer>
-                {(value) => {
-                    const { loggedIn } = value;
+            <WalletConsumer>
+                {(walletValue) => {
+                    var props = {value:{walletValue}}
                     return (
-                        loggedIn ? <div>
-                            <Navbar />
-                            <Switch>
-                                {/* <Route exact path="/" component={ProductList} /> */}
-                                <Route exact path="/" component={ProductList} />
-                                <Route exact path="/details" component={Details} />
-                                <Route exact path="/cart" component={Cart} />
-                                <Route exact path="/wallet/dashboard" component={Dashboard} />
-                                <Route exact path="/wallet/buy-sell" component={BuySell} />
-                                <Route exact path="/wallet/transactions" component={Transactions} />
-                                <Route exact path="/wallet/tokenize" component={Tokenize} />
-                                <Route component={Def} />
-                            </Switch>
-                            <Modal />
-                            <SendModal />
-                        </div> : <div className="login-page-container">
-                                <LoginFields />
-                                <LoginImage />
-                            </div>
+                        <LoginConsumer>
+                            {(value) => {
+                                const { loggedIn } = value;
+                                return (
+                                    loggedIn ? <div>
+                                        <Navbar />
+                                        <Switch>
+                                            {/* <Route exact path="/" component={ProductList} /> */}
+                                            <Route exact path="/" component={ProductList} />
+                                            <Route exact path="/details" component={Details} />
+                                            <Route exact path="/cart" component={Cart} />
+                                            <Route exact path="/wallet/dashboard" component={Dashboard} />
+                                            <Route exact path="/wallet/buy-sell" component={BuySell} />
+                                            <Route exact path="/wallet/transactions" component={Transactions} />
+                                            <Route exact path="/wallet/tokenize" render={(props) => <Tokenize {...props} isAuthed={true} value={walletValue} component={Tokenize} />} />
+                                            <Route component={Def} />
+                                        </Switch>
+                                        <Modal />
+                                        <SendModal />
+                                    </div> : <div className="login-page-container">
+                                            <LoginFields />
+                                            <LoginImage />
+                                        </div>
+                                )
+                            }}
+                        </LoginConsumer>
                     )
                 }}
-            </LoginConsumer>
+            </WalletConsumer>
+
 
         );
     }

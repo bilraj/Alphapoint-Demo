@@ -213,6 +213,12 @@ textarea {
     cursor: pointer;
 }
 
+.send-cancel-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .send-button {
     display: flex;
     justify-content: center;
