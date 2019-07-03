@@ -8,6 +8,12 @@ import TransactionTable from './TransactionsTable';
 
 
 export default class Dashboard extends Component {
+
+    componentDidMount() {
+        if(localStorage.getItem("selectedItem") !== null) {
+            
+        } 
+    }
     render() {
         return (
             <WalletConsumer>

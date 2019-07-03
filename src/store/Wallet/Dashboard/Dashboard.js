@@ -36,11 +36,11 @@ export default class Dashboard extends Component {
                 return (
                   <div className="cont">
                     <Menu />
-                    <div className="container-fluid" id="top-balance" >
+                    <div className="cont ml-4 mt-2" id="top-balance" >
                       <Top value={value} />
-                      <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-beetween", height: "auto", width: "100%" }}>
+                      <div style={{ display: "flex", flexDirection: "row",  marginTop:"10px", justifyContent:"space-beetween", height: "auto", width: "100%" }}>
                         <Table value={value} />
-                        <div className="vertical-line"></div>
+                        <div style={{display:value.tokens.length ? "block" : "none"}}className="vertical-line"></div>
                         <BuyTable addNewCurrency={value.addNewCurrency} value={value} />
                       </div>
 

@@ -225,7 +225,7 @@ export default class Tokenize extends Component {
             name: this.state.token.name,
             balance: 0,
             conversionRate: 1,
-            logo: "fas fa-box"
+            logo: "fab fa-joomla"
         }
 
         var token = {

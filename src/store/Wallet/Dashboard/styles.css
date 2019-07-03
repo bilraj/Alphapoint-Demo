@@ -1,26 +1,3 @@
-#balance-table {
-    width: 100%;
-    height: 50%;
-    border: 1px solid rgb(240, 242, 247);
-    display: table;
-}
-
-#balance-table-caption {
-    display: table-caption;
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-#balance-table-header {
-    display: table-header-group;
-    font-weight: bold;
-    font-size: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
 .balance-table-header-cell {
     height: auto;
 }
@@ -56,9 +33,9 @@
     flex-direction: column;
     width: 50% !important;
     height: auto;
-    border: 1px solid var(--lightBlue);
+    border: 2px solid var(--four);
     border-radius: 6px;
-    box-shadow: 4px 10px var(--lightBlue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 
@@ -66,7 +43,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid var(--lightBlue);
+    border-bottom: 1px solid var(--four);
 
 }
 
@@ -88,12 +65,7 @@
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
-    color: black;
-}
-
-#total-balance-number {
-    font-size: 22px;
-    color: black;
+    color: var(--four);
 }
 
 .usd-pax {
@@ -131,22 +103,21 @@
     right: 0;
     margin-right: 3%;
     height: auto;
-    border: 1px solid var(--lightBlue);
+    border: 2px solid var(--four);
     border-radius: 6px;
-    box-shadow: 4px 10px var(--lightBlue);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     width: 30px;
-    height: 70%;
+    height: auto;
+    max-height: 70%;
+    min-height: 70%;
     border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
 }
 
 .buy-words {
     font-size: 16px;
     margin-left: 20px;
     color: rgb(80, 89, 87);
+    font-weight: 400;
 }
 
 .buy-input {
@@ -154,7 +125,7 @@
     height: 30px;
     width: 80%;
     margin-left: 20px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 .buy-row-close {}
@@ -166,7 +137,9 @@
 
 #buy-button {
     font-size: 24px;
-    color: var(--importantGrey);
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--one);
     border: none;
     border-radius: 5px;
     width: 180px;
@@ -180,22 +153,34 @@
     align-items: center;
     justify-content: center;
     outline: none;
-    background-color: var(--lightBlue);
+    background-color: var(--four);
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
+    transition: 0.3s;
+}
+
+#buy-button:hover {
+    background-color: var(--five);
+    color: var(--two);
 }
 
 .vertical-line {
-    border-right: 2px solid black;
+    border-left: 2px solid var(--four);
+    opacity: .4;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 70%;
+    border-radius: 2px;
     position: absolute;
-    right: 0;
+    left: 68%;
+    top: 2;
 }
 
 #purchase-amount {
     font-weight: 500;
     font-size: 26px;
-    color: #0c913f;
+    color: var(--one);
+    font-weight: bold;
     text-align: center;
 }
 
@@ -256,7 +241,10 @@
 }
 
 .buttons {
-    margin-bottom: 30px;
+    position: absolute;
+    bottom: 2%;
+    text-align: center;
+    width: 100%;
 }
 
 #icon-container {
@@ -269,7 +257,7 @@
 }
 
 
-input[type=number]:not(.non){
+input[type=number]:not(.non) {
     border: none;
 }
 
@@ -281,9 +269,52 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 .cards {
     margin-left: 10px;
+}
+
+input {
+    background-color: var(--white);
+}
+
+hr {
+    background-color: var(--two);
+}
+
+#success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#success-icon {
+    margin-top: 30%;
+    text-align: center;
+}
+
+#success-words {
+    font-weight: 600;
+    color: var(--five);
+    font-size: 30px;
+    font-family: 'Vollkorn', serif;
+    margin-top: 25%;
+}
+
+#success-sub-words {
+    font-size: 16px;
+    color: var(--five);
+    font-weight: 300;
+}
+
+.home-button {
+    margin-top: 30%;
+    border: 1px solid var(--one);
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
 }

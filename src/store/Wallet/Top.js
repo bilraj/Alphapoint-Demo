@@ -42,6 +42,8 @@ export default class Top extends Component {
                 selectedItem: item,
                 showItems: false
             }
+        }, () => {
+            localStorage.setItem("selectedItem", JSON.stringify(this.state.selectedItem))
         })
     }
 
@@ -71,7 +73,7 @@ export default class Top extends Component {
                                                 <div className="balance-container">
                                                     <div onClick={this.dropdown} className="balance-header" >
                                                         <h4>Balance: {this.fix(this.state.selectedItem.balance)} {this.state.selectedItem.sym}</h4>
-                                                        <span style={{ marginLeft: "auto", marginRight: "10px", cursor: "pointer" }}><i className="fas fa-chevron-down"></i></span>
+                                                        {/* <span style={{ marginLeft: "auto", marginRight: "10px", cursor: "pointer" }}><i className="fas fa-chevron-down"></i></span> */}
                                                     </div>
                                                     <div style={{ display: this.state.showItems ? "block" : "none" }} className="balance-dropdown">
                                                         {

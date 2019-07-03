@@ -64,8 +64,8 @@ export default class SendModal extends Component {
                                     <div id="modal">
                                         <div className="modal-header">
                                             <div>
-                                                <i className="fas fa-paper-plane fa-lg"></i>
-                                                <span id="send-bitcoin">Send Bitcoin</span>
+                                                <i className="fas fa-paper-plane fa-lg" style={{color:"var(--two)"}}></i>
+                                                <span className="send-bitcoin">Send Cryptocurrency</span>
                                             </div>
 
                                             <div style={{ cursor: "pointer" }} onClick={() => {

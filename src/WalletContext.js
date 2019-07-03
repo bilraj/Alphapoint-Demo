@@ -125,7 +125,6 @@ export default class WalletProvider extends Component {
             if (temp[i].name === name) {
                 index = i;
                 found = true;
-                alert("Found")
                 break;
             }
         }

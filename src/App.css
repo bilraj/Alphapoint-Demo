@@ -13,12 +13,36 @@
   --modalBoxGrey: #ccd6e8;
   --importantGrey: #54585A;
   --disabled: #EBEBE4;
+
+
+  /* Dark Blue Theme */ 
+  /* --one: #0C0032;
+  --two: #190061;
+  --three: #240090;
+  --four: #3500D3;
+  --five: #282828;
+  --six: #0d5bd9; */
+/* 
+  --one: #5680E9;
+  --two: #84CEEB;
+  --three: #5AB9EA;
+  --four: #C1C8E4;
+  --five: #8860D0; */
+
+  --one: #61892F;
+  --two: #86C232;
+  --three: #222629;
+  --four: #474B4F;
+  --five: #6B6E70;
 }
 
+input {
+
+}
 body {
   /* background: var(--mainWhite) !important; */
-  background: var(--white) !important;
-  color: var(--mainDark) !important;
+  background: var(--three) !important;
+  color: var(--one) !important;
 }
 
 .text-title {

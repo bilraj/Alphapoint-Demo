@@ -9,16 +9,16 @@ export default class Menu extends Component {
 
         return (
 
-            <MenuWrapper className="navbar-nav flex-column" >
+            <MenuWrapper className="navbar-nav flex-column" style={{backgroundColor:"var(--three)"}}>
                 <Link to="/wallet/dashboard" className="nav-item">
-                    <ButtonContainer selected className="px-3 py-2">
+                    <ButtonContainer selected className="px-3 py-2 nav-items">
                         <span className="mr-2"><i className="fas fa-home"></i></span>
                         Dashboard
                     </ButtonContainer>
                 </Link>
 
                 <Link to="/wallet/transactions" className="nav-item">
-                    <ButtonContainer selected className="px-3 py-2">
+                    <ButtonContainer selected className="px-3 py-2 nav-items">
                         <span className="mr-2"><i className="fas fa-money-check-alt"></i>
 
                         </span>
@@ -30,7 +30,7 @@ export default class Menu extends Component {
                         return (
                             value.isAdmin ?
                                 <Link to="/wallet/tokenize" className="nav-item">
-                                    <ButtonContainer selected className="px-3 py-2">
+                                    <ButtonContainer selected className="px-3 py-2 nav-items">
                                         <span className="mr-2"><i className="fas fa-plus-square"></i>
 
                                         </span>

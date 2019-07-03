@@ -4,6 +4,7 @@ import BuyForm from './BuyForm';
 import { CheckoutFormA, CheckoutFormB } from './CheckoutForm';
 import CheckoutTop from './CheckoutTop';
 import { ButtonContainer } from '../../Button';
+import PaymentSuccess from './PaymentSuccess';
 
 
 export default class BuyTable extends Component {
@@ -11,9 +12,9 @@ export default class BuyTable extends Component {
         super(props);
 
         this.state = {
-            amount: '318.2',
+            amount: '',
             paymentSuccess: false,
-            currentStep: 3,
+            currentStep: 1,
             fullName: "",
             email: "",
             address: "",
@@ -48,13 +49,14 @@ export default class BuyTable extends Component {
             balance: Number(this.state.amount)
         }
 
-        if (this.props.addNewCurrency(obj)) {
-            this.setState(() => {
-                return {
-                    paymentSuccess: true,
-                }
-            })
-        }
+        this.props.addNewCurrency(obj)
+        this.setState(() => {
+            return {
+                paymentSuccess: true,
+                amount: ''
+            }
+        })
+
     }
 
     handleFieldChange = (event) => {
@@ -97,7 +99,7 @@ export default class BuyTable extends Component {
 
     _next = () => {
         let { currentStep } = this.state;
-        currentStep = currentStep >= 4 ? 1 : currentStep + 1;
+        currentStep = currentStep >= 4 ? 5 : currentStep + 1;
         this.setState(() => {
             return {
                 currentStep: currentStep
@@ -122,11 +124,19 @@ export default class BuyTable extends Component {
                 </ButtonContainer>
             )
         }
+
+        else if (currentStep === 5) {
+            this.setState(() => {
+                return {
+                    currentStep: 1
+                }
+            })
+        }
     }
 
     get previousButton() {
         let { currentStep } = this.state;
-        if (currentStep !== 1) {
+        if (currentStep !== 1 && currentStep !== 4) {
             return (
                 <ButtonContainer onClick={this._prev}>
                     Back
@@ -144,8 +154,20 @@ export default class BuyTable extends Component {
 
     handleSubmitPayment = () => {
         if (this.allPaymentFieldsValid()) {
+            this.handleSubmit();
             this._next();
         }
+        else {
+            alert("Payment false")
+        }
+    }
+
+    resetStep = () => {
+        this.setState(() => {
+            return {
+                currentStep: 1
+            }
+        })
     }
 
     allPaymentFieldsValid = () => {
@@ -160,7 +182,6 @@ export default class BuyTable extends Component {
             return false;
         }
         return true;
-
     }
 
     allBillingFieldsValid = () => {
@@ -178,18 +199,26 @@ export default class BuyTable extends Component {
 
     render() {
         if (this.props.value.tokens.length === 0) return null;
+
         const { symbol } = this.props.value.tokens[0];
+        const { balances } = this.props.value;
+        var { name } = balances.find((element) => {
+            return symbol === element.sym;
+        });
+
         // If no new coin, add to wallet
         return (
             <div className="buy-container">
                 <CheckoutTop currentStep={this.state.currentStep} symbol={symbol} amount={this.state.amount} />
-                <BuyForm symbol={symbol} value={this.state} updateCurrentStep={this.updateCurrentStep} handleChange={this.handleChange} currentStep={this.state.currentStep} />
+                <BuyForm name={name} symbol={symbol} value={this.state} updateCurrentStep={this.updateCurrentStep} handleChange={this.handleChange} currentStep={this.state.currentStep} />
                 <CheckoutFormA handleSubmitBillingAddress={this.handleSubmitBillingAddress} handleFieldChange={this.handleFieldChange} symbol={symbol} amount={this.state.amount} currentStep={this.state.currentStep} />
                 <CheckoutFormB handleSubmitPayment={this.handleSubmitPayment} handleFieldChange={this.handleFieldChange} symbol={symbol} amount={this.state.amount} currentStep={this.state.currentStep} />
                 <div className="buttons">
-                    <span>{this.previousButton}</span>
+                    <span id="buy-prev-button">{this.previousButton}</span>
                     <span>{this.nextButton}</span>
                 </div>
+
+                <PaymentSuccess resetStep={this.resetStep} currentStep={this.state.currentStep} addNewCurrency={this.props.addNewCurrency} amount={this.state.amount} name={name} />
 
 
             </div>

@@ -4,7 +4,6 @@ const CheckoutTop = (props) => {
     if(props.currentStep !== 2 && props.currentStep !== 3) return null;
     return (
         <>
-        
             <div className="table-words">
                 <span>Checkout </span>
                 <hr style={{ width: "85%" }}></hr>

@@ -46,7 +46,7 @@ const CheckoutFormB = (props) => {
                 <span className="form-words-without-icons">Accepted Cards</span>
             </div>
             <div id="icon-container">
-                <i className="fab fa-cc-visa fa-2x cards" style={{ color: "navy;" }}></i>
+                <i className="fab fa-cc-visa fa-2x cards" style={{ color: "navy" }}></i>
                 <i className="fab fa-cc-amex fa-2x cards" style={{ color: "blue" }}></i>
                 <i className="fab fa-cc-mastercard fa-2x cards" style={{ color: "red" }}></i>
                 <i className="fab fa-cc-discover fa-2x cards" style={{ color: "orange" }}></i>
@@ -54,21 +54,21 @@ const CheckoutFormB = (props) => {
 
             <div className="buy-row">
                 <span className="form-words-without-icons">Name on Card</span>
-                <input type="text" id="nameOnCard" name="nameOnCard" className="form-input" placeholder="John M. Doe" />
+                <input onBlur={props.handleFieldChange} type="text" id="nameOnCard" name="nameOnCard" className="form-input" placeholder="John M. Doe" />
             </div>
             <div className="buy-row">
                 <span className="form-words-without-icons">Credit Card Number</span>
-                <input type="text" id="creditCardNumber" name="creditCardNumber" className="form-input" placeholder="1111-2222-3333-4444" />
+                <input onBlur={props.handleFieldChange} type="text" id="creditCardNumber" name="creditCardNumber" className="form-input" placeholder="1111-2222-3333-4444" />
             </div>
             <div className="buy-row">
                 <span className="form-words-without-icons">Exp Month</span>
-                <input type="text" id="city" name="expirationMonth" className="form-input" placeholder="January" />
+                <input onBlur={props.handleFieldChange} type="text" id="city" name="expirationMonth" className="form-input" placeholder="January" />
             </div>
 
             <div className="state-zip">
                 <div className="buy-row-last">
                     <span className="form-words-without-icons">Exp Year</span>
-                    <input type="text" id="expirationYear" name="expirationYear" className="form-input" placeholder="2019" />
+                    <input onBlur={props.handleFieldChange} type="text" id="expirationYear" name="expirationYear" className="form-input" placeholder="2019" />
                 </div>
 
                 <div className="buy-row-last">

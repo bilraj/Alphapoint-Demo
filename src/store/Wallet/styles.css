@@ -12,19 +12,25 @@
 .balance-header {
     display: flex;
     align-items: center;
-    border: 2px solid var(--lightBlue);
+    border: 1px solid var(--two);
     border-radius: 8px;
     padding: 5px 5px 1px 5px;
     width: 100%;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    color: var(--lightBlue);
-    background-color: white;
+    transition: all .2s ease-in-out;
+    color: var(--two);
+    background: transparent;
+    padding-top: 12px;
+
+    display: flex;
+    justify-content: center;
+
 }
 
 .balance-header:hover {
-    color: black;
-    background-color: var(--lightBlue);
+    color: var(--two);
+    background-color: var(--four);
+    border: none;
 }
 
 .balance-header:focus {
@@ -34,7 +40,7 @@
 .balance-dropdown {
     margin-top: 3px;
     width: 60%;
-    border: 1px solid var(--lightBlue);
+    border: 1px solid var(--two);
     z-index: 1000000;
     background: transparent;
     border-radius: 5px;
@@ -54,7 +60,9 @@
     margin-top: 10px;
 }
 
-.item:hover {}
+.item:hover {
+    color: var(--two) !important;
+}
 
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -65,3 +73,13 @@
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
   }
+
+.nav-items {
+    background: transparent;
+    border: 1px solid black;
+}
+
+.nav-items:hover {
+    color: var(--two);
+    background-color: var(--four);
+}

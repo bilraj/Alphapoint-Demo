@@ -93,7 +93,7 @@ export default class Table extends Component {
         var totalBalance = this.localize(this.calculateTotalBalance(balances));
         
         return (
-            <div className="table-container-1">
+            <div className="noselect table-container-1">
                 <div className="table-header">
                     <div className="left-header">
                         <span className="balance-table-words noselect">Total Balance</span>

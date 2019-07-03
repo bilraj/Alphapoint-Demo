@@ -10,7 +10,7 @@ export default class Navbar extends Component {
   handleClick = (value) => {
     value.logout();
   }
-  
+
   render() {
     return (
       <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm">
@@ -28,6 +28,12 @@ export default class Navbar extends Component {
           <MenuItemContainer className="nav-item ml-5">
             <Link to="/wallet/dashboard" className="nav-link">
               Wallet
+            </Link>
+          </MenuItemContainer>
+
+          <MenuItemContainer className="nav-item ml-5">
+            <Link to="/register" className="nav-link">
+              Registration
             </Link>
           </MenuItemContainer>
           {/* <li className="nav-item ml-5">
@@ -62,7 +68,7 @@ export default class Navbar extends Component {
 }
 
 const NavWrapper = styled.nav`
-background: var(--mainBlue);
+background: var(--one);
 .nav-link{
   color:var(--mainWhite) !important;
   font-size:1.3rem;

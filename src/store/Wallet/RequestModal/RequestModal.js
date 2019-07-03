@@ -49,7 +49,7 @@ export default class SendModal extends Component {
                                         <div className="modal-header">
                                             <div>
                                                 <i className="fas fa-paper-plane fa-lg"></i>
-                                                <span id="send-bitcoin">Send Bitcoin</span>
+                                                <span id="send-bitcoin">Send Cryptocurrency</span>
                                             </div>
                                             <SendConsumer>
                                                 {(obj) => {
