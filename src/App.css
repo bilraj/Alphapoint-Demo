@@ -1,0 +1,91 @@
+:root {
+  --mainBlue: #2a2a72;
+  --lightBlue: #009ffd;
+  --white: #ffffff;
+  --mainWhite: #f3f3f3;
+  --mainDark: #232528;
+  --mainYellow: #ffa400;
+  --menuBlue: #50508c;
+  --menuTextBlue: #144699;
+  --mainGrey: #677185;
+  --lightTextBlue: #D8EBFD;
+  --lightGrey: #989898;
+  --modalBoxGrey: #ccd6e8;
+  --importantGrey: #54585A;
+  --disabled: #EBEBE4;
+
+
+  /* Dark Blue Theme */
+  /* --one: #0C0032;
+  --two: #190061;
+  --three: #240090;
+  --four: #3500D3;
+  --five: #282828;
+  --six: #0d5bd9; */
+  /* 
+  --one: #5680E9;
+  --two: #84CEEB;
+  --three: #5AB9EA;
+  --four: #C1C8E4;
+  --five: #8860D0; */
+
+  /* --one: #1F2605;
+  --two: #1F6521;
+  --three: #53900F;
+  --four: #A4A71E;
+  --five: #D6Ce15; */
+/* 
+  --one: #59253A;
+  --two: #78244C;
+  --three: #895061;
+  --four: #0677A1;
+  --five: #2D4159; */
+
+  --one: #61892F;
+  --two: #86C232;
+  --three: #222629;
+  --four: #474B4F;
+  --five: #6B6E70;
+}
+
+input {}
+
+body {
+  /* background: var(--mainWhite) !important; */
+  background: var(--white) !important;
+  color: var(--five) !important;
+}
+
+.text-title {
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+}
+
+.text-blue {
+  color: var(--mainBlue) !important;
+}
+
+.textLight {
+  color: var(--lightBlue) !important;
+}
+
+.btn-black {
+  background: transparent;
+  text-transform: capitalize;
+  font-size: 0.8rem !important;
+  color: var(--mainDark);
+  border-radius: 0 !important;
+  border: 0.1rem solid var(--mainDark) !important
+}
+
+.btn-black:hover {
+  background: var(--mainDark) !important;
+  color: "red" !important;
+}
+
+.cart-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--mainYellow);
+}

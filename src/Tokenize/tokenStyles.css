@@ -1,0 +1,186 @@
+#welcome-text {
+    font-size: 70px;
+    margin-top: 30px;
+    color: black;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 100;
+}
+
+/* .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+*/
+.container-fluid {
+    padding: 0px;
+}
+
+.c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1100px;
+}
+
+.cont {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.topContainer {
+    font-size: 20px;
+    border: 1px solid var(--one);
+    margin-bottom: 50px;
+    border-radius: 4px;
+    width: 50%;
+}
+
+.bottomContainer {
+    width: 50%;
+    border-radius: 4px;
+    border: 1px solid var(--one);
+    margin-bottom: 40px
+}
+
+#not {
+    color: green;
+}
+
+.asset {
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+#physical-asset {
+    margin-left: 20px;
+}
+
+#physical-asset-container {
+    border-bottom: 1px solid var(--one);
+}
+
+#greyed {
+    background-color: var(--four);
+
+}
+
+#financial-asset {
+    margin-left: 20px;
+}
+
+.question {
+    position: relative;
+    padding: 15px;
+}
+
+.top {
+    margin-top: 50px;
+}
+
+.first {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#asset-question {
+    font-size: 22px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* #physical-asset {
+    padding: 20px 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid grey;
+} */
+.tokenization-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.button1 {
+    border: 1px solid black;
+
+    font-size: 24px;
+    color: var(--white);
+    border-radius: 5px;
+    width: 180px;
+    height: 60px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+    font-size: 1.4 rem;
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    background-color: rgb(35, 37, 40);
+    margin-left: 50%;
+}
+
+.button2 {
+    border: 1px solid black;
+    font-size: 24px;
+    color: var(--white);
+    border-radius: 5px;
+    width: 180px;
+    height: 60px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 30px;
+    text-transform: capitalize;
+    font-size: 1.4 rem;
+    padding: 0.2rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    background-color: rgb(35, 37, 40);
+    margin-left: 20%;
+}
+
+.r {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottom-buttons {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#buy-prev-button {
+    margin-right: 30px;
+}
+
+/* #main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px solid black;
+    overflow: scroll;
+} */
+
+
+#p {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+}

@@ -1,0 +1,121 @@
+#checkout-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-bottom: 200px;
+}
+
+#checkout-h1 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+#checkout-body {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+}
+
+#total-container {
+    padding: 10px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 8px;
+    width: 300px;
+    position: absolute;
+    right: 0%;
+    bottom: 5%;
+}
+
+.checkout-form-input {
+    width: 300px;
+    border-radius: 4px;
+}
+
+#first-second-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    height: 100%;
+}
+
+#second-payment {
+    padding-top: 0px;
+
+}
+
+#final-button {
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+}
+
+#confirm-container-thanks {
+    font-size: 24px;
+    height: 100vh;
+    font-weight: 500;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
+
+#dropdown-header {
+    width: 100%;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    position: relative;
+    transition: ease;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+#selected-item {
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    padding: auto;
+    font-size: 20px;
+    position: absolute;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+#dropdown-body {
+    width: 100%;
+    margin-top: .2rem;
+    border-radius: 4px;
+    padding-left: 1rem;
+    font-size: 16px;
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background: white;
+    z-index: 2;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+}
+
+#payment-dropdown-container {
+    width: 200px;
+}
+
+.payment-item {
+    padding: 2px 0 10px 4px;
+    cursor: pointer;
+}
+
+.payment-item:first-child {
+    padding-top: 10px;
+}
+
+.payment-item:hover {
+    color: green;
+}
+
+#dropdown-body-container {
+    position: relative;
+    width: 100%;
+}
