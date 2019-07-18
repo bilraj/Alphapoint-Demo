@@ -37,8 +37,6 @@ export default class Checkout extends Component {
         const { cartTotal } = value;
 
         if (this.state.payWithToken && balances.length > 4) {
-
-            alert("Paying with token")
             // Check if have enough
             const { balances } = walletValue;
             const symbol = balances[4].sym;
@@ -65,8 +63,6 @@ export default class Checkout extends Component {
 
             }
         } else {
-            alert("Not Paying with token")
-
             // Pay with dollars
             value.clearCart();
 

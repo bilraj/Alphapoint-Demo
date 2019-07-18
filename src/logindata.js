@@ -9,10 +9,10 @@ export const users = [
             balance: [100, "BTC"],
             transactions: []
         },
-        isAdmin: true
+        isAdmin: false
     },
     {
-        username: "zach",
+        username: "satoshi",
         firstName: "Zach",
         lastName: "Goldwaite",
         password: "satoshisoup2019",
@@ -21,7 +21,7 @@ export const users = [
             balance: [100, "BTC"],
             transactions: []
         },
-        isAdmin: false
+        isAdmin: true
     },
     {
         username: "risho",

@@ -9,7 +9,7 @@ export default class Menu extends Component {
 
         return (
 
-            <MenuWrapper className="navbar-nav flex-column" style={{backgroundColor:"var(--three)"}}>
+            <MenuWrapper className="navbar-nav flex-column" style={{ backgroundColor: "var(--three)" }}>
                 <Link to="/wallet/dashboard" className="nav-item mr-1 ml-1">
                     <ButtonContainer selected className="px-3 py-2 nav-items">
                         <span className="mr-2"><i className="fas fa-home"></i></span>
